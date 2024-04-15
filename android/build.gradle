@@ -2,22 +2,50 @@ buildscript {
     ext {
         buildToolsVersion = "34.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 34
         targetSdkVersion = 34
         ndkVersion = "25.1.8937393"
-        kotlinVersion = "1.8.0"
+        kotlinVersion = "1.5.31"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle")
-        classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("com.android.tools.build:gradle:8.3.0")
+        classpath("com.facebook.react:react-native-gradle-plugin:2.0.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
+apply plugin: "com.android.application"
 apply plugin: "com.facebook.react.rootproject"
 
+android {
+    compileSdkVersion 34
+    buildToolsVersion "34.0.0"
 
+    namespace "com.mukgenie"
+    defaultConfig {
+        applicationId "com.example.myapp"
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('com.facebook.react:react-native:0.73.6')
+    implementation 'com.facebook.react:react-native:+'
+    // 여기에 추가적인 의존성을 추가할 수 있습니다.
+}
