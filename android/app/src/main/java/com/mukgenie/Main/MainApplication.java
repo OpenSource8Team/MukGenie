@@ -1,4 +1,4 @@
-package com.mukgenie;
+package com.mukgenie.Main;
 
 import android.app.Application;
 

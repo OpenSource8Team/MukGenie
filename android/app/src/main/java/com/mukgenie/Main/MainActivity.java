@@ -1,7 +1,9 @@
-package com.mukgenie;
+package com.mukgenie.Main;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mukgenie.R;
 
 public class MainActivity extends AppCompatActivity {
 
