@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "expo-checkbox": "^2.7.0",
     "react": "18.2.0",
     "react-native": "0.73.6"
   },
@@ -32,6 +33,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "proxy": "http://localhost:8080"
+  }
 }
