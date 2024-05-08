@@ -1,0 +1,17 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "MukGinie"]
+	url = " push -u https://github.com/OpenSource8Team/MukGenie.git master\n"
+	fetch = +refs/heads/*:refs/remotes/MukGinie/*
+[guitool "lee"]
+	cmd = git add .
+[gui]
+	wmstate = normal
+	geometry = 824x435+121+129 179 196
+[lfs]
+	repositoryformatversion = 0
