@@ -1,112 +1,220 @@
-import React, { useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { SafeAreaView, View, Text, TouchableOpacity, } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-/* Common Button Component */
-const Button = ({ title, onPress, backgroundColor }) => (
-	<TouchableOpacity
+/* 	설문 설정 스크린의 역할:
+	설문을 시작하기 전, 사용자의 취향에 따라 품목을 설정.
+	라디오 버튼으로 설정할 예정. 
+*/
+const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능하게 끔 색을 바꿈
+	return (
+	  <TouchableOpacity
 		style={{
-			margin: 5,
-			padding: 10,
-			borderRadius: 5,
-			backgroundColor: backgroundColor || "#3ED4BE",
+		  width: 150,
+		  height: 50,
+		  justifyContent: "center",
+		  alignItems: "center",
+		  backgroundColor: "#6750A4",
+		  borderRadius: 90,
+		  padding: 12,
 		}}
 		onPress={onPress}
-	>
+	  >
 		<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-	</TouchableOpacity>
-);
-
-/* Survey Setting Component */
-const SurveySetting = ({ navigation }) => {
-	const [selectedItems, setSelectedItems] = useState([]);
-
-	const handleSelectItem = (item) => {
-		setSelectedItems((prevItems) =>
-			prevItems.includes(item) ? prevItems : [...prevItems, item]
-		);
-	};
-
-	const handleRemoveItem = (item) => {
-		setSelectedItems((prevItems) => prevItems.filter((i) => i !== item));
-	};
-
-	const renderButtons = (items) => (
-		<View style={{ flexDirection: "row", justifyContent: "center", padding: 12 }}>
-			{items.map((item, index) => (
-				<Button key={index} title={item} onPress={() => handleSelectItem(item)} />
-			))}
-		</View>
+	  </TouchableOpacity>
 	);
+  };
 
-	const selectedPane = () => (
-		<View
-			style={{
-				flexDirection: "row",
-				flexWrap: "wrap",
-				justifyContent: "center",
-				backgroundColor: "#E0E0E0",
-				padding: 12,
-				marginVertical: 10,
-				borderRadius: 5,
-			}}
-		>
-			{selectedItems.map((item, index) => (
-				<Button
-					key={index}
-					title={item}
-					onPress={() => handleRemoveItem(item)}
-					backgroundColor="#FF0000"
-				/>
-			))}
-		</View>
-	);
+const SurveySetting = ({navigation}) => {
+	const desctext = () => {
+        return (
+            <Text style = {{color: "#303233", fontSize: 20, textAlign: "center"}}>
+				{"먹지니를 시작 하기 전에,\n빠른 결과도출을 위해 설정해 주세요!"}
+			</Text>
 
-	const ingredientsGroup1 = ["유제품", "밀가루", "땅콩", "견과류", "대두", "과일"];
-	const ingredientsGroup2 = ["채소", "복숭아", "육류", "해산물및어패류", "고수"];
-	const ingredientsGroup3 = ["민트", "계란", "오이", "가지", "브로콜리"];
+        )
+    }
 
-	const handleSubmit = async () => {
-        if (selectedItems.length === 0) {
-            navigation.reset({ index: 0, routes: [{ name: 'survey' }] });
-            return; // 선택된 항목이 없으면 다음 화면으로 바로 이동
-        }
+    const descpane = () => {
+        return (
+            <View
+				style = {{
+					height: 170,
+					justifyContent: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				{desctext()}
+			</View>
 
-        try {
-            const queryParams = selectedItems.map(item => `allergies=${encodeURIComponent(item)}`).join('&');
-            const response = await fetch(`http://localhost:8080/hate/allergy?${queryParams}`);
+        )
+    }
 
-            if (response.ok) {
-                navigation.reset({ index: 0, routes: [{ name: 'survey' }] });
-            } else {
-                console.error('Failed to fetch data from server');
-            }
-        } catch (error) {
-            console.error('Error occurred while fetching data:', error);
-        }
-    };
-
-	return (
-		<SafeAreaView style={{ flex: 1, justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
-			<View style={{ height: 100, justifyContent: "center", padding: 12 }}>
-				<Text style={{ color: "#303233", fontSize: 20, textAlign: "center" }}>
-					원하지 않는 재료들을 설정해 주세요!
+    const country = () => {
+        return (
+            <View
+				style = {{
+					height: 70,
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#303233",
+						fontSize: 14,
+					}}>
+					{"국가 분류"}
 				</Text>
 			</View>
-			{selectedPane()}
-			<View style={{ flex: 1, justifyContent: "center", padding: 12 }}>
-				{renderButtons(ingredientsGroup1)}
-				{renderButtons(ingredientsGroup2)}
-				{renderButtons(ingredientsGroup3)}
+
+        )
+    }
+
+    const type = () => {
+        return (
+            <View
+				style = {{
+					height: 70,
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#303233",
+						fontSize: 14,
+					}}>
+					{"음식 종류"}
+				</Text>
 			</View>
-			<View style={{ height: 70, justifyContent: "center", alignItems: "center" }}>
-				<Button title="먹지니 시작하기!" onPress={handleSubmit} />
+
+        )
+    }
+
+    const checkboxpane = () => {
+        return (
+            <View
+				style = {{
+					flex: 1,
+					justifyContent: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				{country()}
+				{type()}
 			</View>
-			<View style={{ height: 40, backgroundColor: "#3ED4BE", padding: 12 }} />
+
+        )
+    }
+
+    const all_button = () => {
+        return (
+            <TouchableOpacity
+				style = {{
+					width: 150,
+					height: 50,
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#6750A4",
+					borderRadius: 90,
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#FFFFFF",
+						fontSize: 14,
+					}}>
+					{"뭐든 좋아요!"}
+				</Text>
+			</TouchableOpacity>
+
+        )
+    }
+
+    const clear_button = () => {
+        return (
+            <TouchableOpacity
+				style = {{
+					width: 150,
+					height: 50,
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#6750A4",
+					borderRadius: 90,
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#FFFFFF",
+						fontSize: 14,
+					}}>
+					{"초기화"}
+				</Text>
+			</TouchableOpacity>
+
+        )
+    }
+
+  
+
+    const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
+        return (
+            <View
+				style = {{
+					height: 40,
+					backgroundColor: "#6750A4",
+					padding: 12,
+				}}>
+			</View>
+
+        )
+    }
+
+    return (
+        <SafeAreaView
+			style = {{
+				flex: 1,
+				justifyContent: "space-between",
+				backgroundColor: "#FFFFFF",
+			}}>
+			{descpane()}
+			{checkboxpane()}
+			<View
+				style = {{
+					height: 70,
+					flexDirection: "row",
+					justifyContent: "space-around",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				{all_button()}
+				{clear_button()}
+			</View>
+			<View
+				style = {{
+					height: 70,
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				<Button
+						title ="먹지니 시작하기!"
+						onPress={() => navigation.navigate("survey")}
+				/>
+			</View>
+			{botbar()}
 		</SafeAreaView>
-	);
-};
+
+    )
+}
 
 export default SurveySetting;

@@ -20,9 +20,9 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
         height: 40,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#3ED4BE",
+        backgroundColor: "#6750A4",
         borderRadius: 90,
-        padding: 5,
+        padding: 12,
       }}
       onPress={onPress}
     >
@@ -32,10 +32,9 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 };
 
 const MainScreen = ({ navigation }) => { 
-  
-  const buttonpane = () => {//버튼 정렬하는 판
+  const buttonpane = () => {
     return (
-      <View 
+      <View
         style={{
           height: 70,
           alignSelf: "stretch",
@@ -45,26 +44,25 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Button 
-          title="유저"
-          onPress={() => navigation.navigate("user")
-        }
+        <Button
+          title="Login"
+          onPress={() => navigation.navigate("login")}
         />
         <Button
-          title="시작"
+          title="Start"
           onPress={() => navigation.navigate("surveysetting")}
         />
         <Button
-          title="로그"
-          onPress={() => navigation.navigate("log")}
+          title="Log"
+          onPress={() => navigation.navigate("logs")}
         />
       </View>
     );
   };
 
-  const mainpane = () => {//버튼과 이미지 정렬용
+  const mainpane = () => {
     return (
-      <View 
+      <View
         style={{
           flex: 1,
           justifyContent: "space-around",
@@ -73,7 +71,7 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Image //이미지, 로고나 캐릭터를 넣을 공간
+        <Image
           source={{ uri: "https://i.imgur.com/1tMFzp8.png" }}
           resizeMode={"stretch"}
           style={{ width: 300, height: 300 }}
@@ -84,7 +82,7 @@ const MainScreen = ({ navigation }) => {
   };
 
   const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
-    return <View style={{ height: 40, backgroundColor: "#3ED4BE", padding: 12 }} />;
+    return <View style={{ height: 40, backgroundColor: "#6750A4", padding: 12 }} />;
   };
 
   return (
