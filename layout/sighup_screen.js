@@ -133,7 +133,7 @@ const SignupScreen = ({ navigation }) => {
               .then((data) => {
                 console.log(data); // 서버로부터 받은 응답 로그에 출력
                 // 여기에서 필요한 작업을 수행합니다. 예를 들어, 회원가입 성공 시 다음 화면으로 이동할 수 있습니다.
-                //navigation.navigate("SuccessScreen"); 구현 안됨
+                //navigation.navigate("SuccessScreen"); 구현안됨
               })
               .catch((error) => {
                 console.error("Error:", error);
