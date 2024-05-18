@@ -10,22 +10,22 @@ const Stack = createStackNavigator();
 */
 const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능하게 끔 색을 바꿈
 	return (
-	<TouchableOpacity
+	  <TouchableOpacity
 		style={{
-			width: 150,
-			height: 50,
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: "#3ED4BE",
-			borderRadius: 90,
-			padding: 12,
+		  width: 150,
+		  height: 50,
+		  justifyContent: "center",
+		  alignItems: "center",
+		  backgroundColor: "#6750A4",
+		  borderRadius: 90,
+		  padding: 12,
 		}}
 		onPress={onPress}
-		>
+	  >
 		<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-		</TouchableOpacity>
+	  </TouchableOpacity>
 	);
-};
+  };
 
 const UserSetting = ({navigation}) => {
 	const desctext = () => {
@@ -48,6 +48,7 @@ const UserSetting = ({navigation}) => {
 				}}>
 				{desctext()}
 			</View>
+
         )
     }
 
@@ -62,8 +63,8 @@ const UserSetting = ({navigation}) => {
 					{"유제품"}
 				</Text>
 				<Checkbox status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -79,8 +80,8 @@ const UserSetting = ({navigation}) => {
 				</Text>
 				<Checkbox 
 					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -95,9 +96,9 @@ const UserSetting = ({navigation}) => {
 					{"어패류"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -113,9 +114,9 @@ const UserSetting = ({navigation}) => {
 					{"땅콩"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -156,9 +157,9 @@ const UserSetting = ({navigation}) => {
 					{"찬 음식"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -172,9 +173,9 @@ const UserSetting = ({navigation}) => {
 					{"뜨거운 음식"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -212,9 +213,9 @@ const UserSetting = ({navigation}) => {
 					{"마라"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -228,9 +229,9 @@ const UserSetting = ({navigation}) => {
 					{"고수"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -269,9 +270,9 @@ const UserSetting = ({navigation}) => {
 					{"단 맛"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -285,9 +286,9 @@ const UserSetting = ({navigation}) => {
 					{"매운 맛"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -301,9 +302,9 @@ const UserSetting = ({navigation}) => {
 					{"쓴 맛"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -317,9 +318,9 @@ const UserSetting = ({navigation}) => {
 					{"짠 맛"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -333,9 +334,9 @@ const UserSetting = ({navigation}) => {
 					{"신 맛"}
 				</Text>
 				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
 			</View>
 		)
 	}
@@ -380,6 +381,7 @@ const UserSetting = ({navigation}) => {
 				{spice()}
 				{taste()}
 			</View>
+
         )
     }
 
@@ -391,7 +393,7 @@ const UserSetting = ({navigation}) => {
 					height: 50,
 					justifyContent: "center",
 					alignItems: "center",
-					backgroundColor: "#3ED4BE",
+					backgroundColor: "#6750A4",
 					borderRadius: 90,
 					padding: 12,
 				}}>
@@ -403,6 +405,7 @@ const UserSetting = ({navigation}) => {
 					{"초기화"}
 				</Text>
 			</TouchableOpacity>
+
         )
     }
 
@@ -411,10 +414,11 @@ const UserSetting = ({navigation}) => {
             <View
 				style = {{
 					height: 40,
-					backgroundColor: "#3ED4BE",
+					backgroundColor: "#6750A4",
 					padding: 12,
 				}}>
 			</View>
+
         )
     }
 
@@ -453,6 +457,7 @@ const UserSetting = ({navigation}) => {
 			</View>
 			{botbar()}
 		</SafeAreaView>
+
     )
 }
 

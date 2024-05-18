@@ -1,7 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
 import { SafeAreaView, View, Text, TouchableOpacity, } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { Checkbox } from 'react-native-paper';
 const Stack = createStackNavigator();
 
 /* 	설문 설정 스크린의 역할:
@@ -52,8 +52,77 @@ const SurveySetting = ({navigation}) => {
         )
     }
 
+	//kostl 부터 westl 까지 한식~양식 체크박스.
+	const kostl = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center" 				}}>
+				<Text 
+					style = {{color: "#303233", fontSize: 14}}>
+					{"한식"}
+				</Text>
+				<Checkbox status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+
+	const cnstl = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+				<Text 
+					style = {{color: "#303233", fontSize: 14,}}>
+					{"중식"}
+				</Text>
+				<Checkbox 
+					status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+
+	const jpstl = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"일식"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+
+	
+	const westl = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"양식"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+
     const country = () => {
-        return (
+		return (
             <View
 				style = {{
 					height: 70,
@@ -68,14 +137,82 @@ const SurveySetting = ({navigation}) => {
 						color: "#303233",
 						fontSize: 14,
 					}}>
-					{"국가 분류"}
+					{"국가 분류: "}
 				</Text>
+				{kostl()}
+				{cnstl()}
+				{jpstl()}
+				{westl()}
 			</View>
-
         )
     }
 
-    const type = () => {
+	const foodrice = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"밥"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+	const foodsoup = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"죽"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+	const foodnoodle = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"면"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+	const foodbread = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"빵"}
+				</Text>
+				<Checkbox
+      				status={checked ? 'checked' : 'unchecked'}
+      				onPress={() => {setChecked(!checked);}}
+    			/>
+			</View>
+		)
+	}
+
+    const foodtype = () => {
         return (
             <View
 				style = {{
@@ -91,8 +228,12 @@ const SurveySetting = ({navigation}) => {
 						color: "#303233",
 						fontSize: 14,
 					}}>
-					{"음식 종류"}
+					{"음식 종류: "}
 				</Text>
+				{foodrice()}
+				{foodsoup()}
+				{foodnoodle()}
+				{foodbread()}
 			</View>
 
         )
@@ -104,11 +245,10 @@ const SurveySetting = ({navigation}) => {
 				style = {{
 					flex: 1,
 					justifyContent: "center",
-					backgroundColor: "#FFFFFF",
 					padding: 12,
 				}}>
 				{country()}
-				{type()}
+				{foodtype()}
 			</View>
 
         )

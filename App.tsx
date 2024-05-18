@@ -12,7 +12,8 @@ import { default as userscreen } from "./layout/user_infomation";
 import { default as surveysetting } from "./layout/survey_setting";
 import { default as surveyresult } from "./layout/survey_result";
 import { default as surveyscreen } from "./layout/survey_screen";
-import { default as surveylog } from "./layout/survey_logs";
+import { default as usersetting } from "./layout/user_setting";
+
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -35,10 +36,11 @@ function App() {
         <Stack.Screen name="surveysetting" component={surveysetting} />
         <Stack.Screen name="survey" component={surveyscreen}/>
         <Stack.Screen name="result" component={surveyresult}/>
-        <Stack.Screen name="logs" component={surveylog}/>
         <Stack.Screen name="login" component={loginscreen}/>
         <Stack.Screen name="sighup" component={sighupscreen}/>
         <Stack.Screen name="user" component={userscreen}/>
+        <Stack.Screen name="usersetting" component={usersetting}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

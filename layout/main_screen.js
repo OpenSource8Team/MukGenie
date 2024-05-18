@@ -22,7 +22,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
         alignItems: "center",
         backgroundColor: "#6750A4",
         borderRadius: 90,
-        padding: 12,
+        padding: 5,
       }}
       onPress={onPress}
     >
@@ -32,6 +32,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 };
 
 const MainScreen = ({ navigation }) => { 
+  
   const buttonpane = () => {
     return (
       <View
@@ -45,16 +46,13 @@ const MainScreen = ({ navigation }) => {
         }}
       >
         <Button
-          title="Login"
-          onPress={() => navigation.navigate("login")}
+          title="유저"
+          onPress={() => navigation.navigate("user")
+        }
         />
         <Button
-          title="Start"
+          title="시작"
           onPress={() => navigation.navigate("surveysetting")}
-        />
-        <Button
-          title="Log"
-          onPress={() => navigation.navigate("logs")}
         />
       </View>
     );

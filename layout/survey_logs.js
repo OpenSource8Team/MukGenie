@@ -7,6 +7,8 @@ const Stack = createStackNavigator();
 /* 	로그 스크린의 역할:
 	사용자의 설문 결과 값을 저장할 예정.
 	내용은 일자/설문 결과값?
+
+	현재는 사용하지 않을 예정.
 */
 
 const LogsScreen = () => {

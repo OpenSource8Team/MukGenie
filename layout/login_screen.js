@@ -19,7 +19,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 		  alignItems: "center",
 		  backgroundColor: "#6750A4",
 		  borderRadius: 90,
-		  padding: 12,
+		  padding: 10,
 		}}
 		onPress={onPress}
 	  >
@@ -83,12 +83,12 @@ const LoginScreen = ({navigation}) => {
 					padding: 12,
 				}}>
 					<Button
-						title ="login"
+						title ="로그인"
 						onPress={() => navigation.navigate("muk")}
 					/>
 
 					<Button
-						title ="sighup"
+						title ="회원가입"
 						onPress={() => navigation.navigate("sighup")}
 					/>
 			</View>
@@ -126,6 +126,17 @@ const LoginScreen = ({navigation}) => {
 			
         )
     }
+	const blank = () => {// 빈공간, 큰 특징 없음, 디자인용.
+        return (
+            <View
+				style = {{
+					height: 40,
+					padding: 12,
+				}}>
+			</View>
+
+        )
+    }
 
 	return (
         <SafeAreaView 
@@ -134,6 +145,7 @@ const LoginScreen = ({navigation}) => {
 				justifyContent: "space-between",
 				backgroundColor: "#FFFFFF",
 			}}>
+			{blank()}
 			{loginpane()}
 			{botbar()}
 		</SafeAreaView>
