@@ -143,7 +143,8 @@ const SurveyScreen = ({navigation}) => {
 						title="답변 3"
 					/>
 					<Button
-						title="답변 4"
+						title="결과 화면으로(테스트)"
+						onPress={() => navigation.navigate("result")}
 					/>
 										
 				</View>

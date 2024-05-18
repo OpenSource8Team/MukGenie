@@ -13,8 +13,8 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 	return (
 	  <TouchableOpacity
 		style={{
-		  width: 150,
-		  height: 50,
+		  width: 100,
+		  height: 40,
 		  justifyContent: "center",
 		  alignItems: "center",
 		  backgroundColor: "#6750A4",
@@ -32,7 +32,7 @@ const SignupScreen = ({navigation}) => {// 스크린
 	const idbox = () => {
         return (
             <TextInput
-				placeholder="ID"
+				placeholder="아이디"
 				value={Text}
 				style = {{
 					color: "#303033",
@@ -49,12 +49,54 @@ const SignupScreen = ({navigation}) => {// 스크린
 
         )
     }
+	
+	const checkbutton = () => {
+		return (
+            <View
+				style = {{
+					alignSelf: "stretch",
+					flexDirection: "row",
+					justifyContent: "space-around",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+					<Button
+						title ="중복 확인"
+					/>
+				
+			</View>
 
-    const pwbox = () => {//유저가 비밀번호를 입력할 텍스트 박스.
+        )
+    }
+
+		
+	
+
+	const idpane = () => {
+        return (
+            <View
+				style = {{
+					alignSelf: "stretch",
+					flexDirection: "row",
+					justifyContent: "space-around",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				{idbox()}
+				{checkbutton()}
+			</View>
+
+        )
+    }
+
+    const pwbox = (pw) => {//유저가 비밀번호를 입력할 텍스트 박스.
         return (
             <TextInput
-				placeholder="Password"
+				placeholder="비밀번호"
 				value={Text}			
+				secureTextEntry={true}
 				style = {{
 					color: "#303033",
 					fontSize: 14,
@@ -70,11 +112,70 @@ const SignupScreen = ({navigation}) => {// 스크린
 
         )
     }
+	const pwrcbox = (pwrc) => {//PassWord Re Checking
+        return (
+            <TextInput
+				placeholder="비밀번호 확인"
+				value={Text}			
+				secureTextEntry={true}
+				style = {{
+					color: "#303033",
+					fontSize: 14,
+					width: 200,
+					height: 40,
+					backgroundColor: "#FFFFFF",
+					borderColor: "#C896FF",
+					borderRadius: 12,
+					borderWidth: 2,
+					padding: 12,
+				}}
+			/>
+
+        )
+    } 
+
+	const pwcheck = () => {
+		let pwrcresult
+		if(pwrcbox.value == null || pwbox.value == null) pwrcresult = '비밀번호를 입력하십시오.'
+
+		else if (pwrcbox.value === pwbox.value) pwrcresult = '비밀번호가 같습니다!';
+						
+		else pwrcresult = '비밀번호 체크가 완료되지 않았습니다.';
+
+		return (
+            <View
+				style = {{
+					}}>
+					<Text>
+						{pwrcresult}	
+					</Text>
+				</View>
+		);
+	};
+
+	const pwpane = () => {
+        return (
+            <View
+				style = {{
+					alignSelf: "stretch",
+					flexDirection: "col",
+					justifyContent: "space-around",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				{pwbox()}
+				{pwrcbox()}
+				{pwcheck()}
+			</View>
+
+        )
+    }
 
     const namebox = () => {//유저가 이름을 입력할 텍스트 박스.
         return (
             <TextInput
-				placeholder="Name"
+				placeholder="이름"
 				value={Text}
 				style = {{
 					color: "#303033",
@@ -103,11 +204,9 @@ const SignupScreen = ({navigation}) => {// 스크린
 					backgroundColor: "#FFFFFF",
 					padding: 12,
 				}}>
-					<Button
-						title ="Check for duplicates"
-					/>
+				
 				<Button
-						title ="Sighup"
+						title ="회원가입"
 						onPress={() => navigation.navigate("login")}
 				/>
 			</View>
@@ -120,25 +219,35 @@ const SignupScreen = ({navigation}) => {// 스크린
             <View
 				style = {{
 					height: 220,
-					justifyContent: "space-between",
+					justifyContent: "center",
 					alignItems: "center",
 					backgroundColor: "#FFFFFF",
 					padding: 12,
 				}}>
-				{idbox()}
-				{pwbox()}
+				{idpane()}
+				{pwpane()}
 				{namebox()}
 				{buttonpane()}
 			</View>
 
         )
     }
+	const blank = () => {// 빈공간, 큰 특징 없음, 디자인용.
+        return (
+            <View
+				style = {{
+					height: 40,
+					padding: 12,
+				}}>
+			</View>
 
+        )
+    }
     const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
         return (
             <View
 				style = {{
-					height: 70,
+					height: 40,
 					backgroundColor: "#6750A4",
 					padding: 12,
 				}}>
@@ -154,6 +263,7 @@ const SignupScreen = ({navigation}) => {// 스크린
 				justifyContent: "space-between",
 				backgroundColor: "#FFFFFF",
 			}}>
+			{blank()}
 			{infopane()}
 			{botbar()}
 		</SafeAreaView>
