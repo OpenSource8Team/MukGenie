@@ -54,6 +54,10 @@ const MainScreen = ({ navigation }) => {
           title="시작"
           onPress={() => navigation.navigate("surveysetting")}
         />
+         <Button
+                  title="테스트"
+                  onPress={() => navigation.navigate("signtest")}
+                />
       </View>
     );
   };
