@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 
 const SignTestScreen = ({ navigation }) => {
   const [inputValues, setInputValues] = useState(["", "", "", "", "", ""]); // 입력 값 상태 배열
   const [progress, setProgress] = useState(1); // 진행 상태
+  const [error, setError] = useState(""); // 에러 상태
 
   // 각 진행 상태에 대한 플레이스홀더 텍스트 배열
   const placeholderTexts = [
@@ -28,11 +29,19 @@ const SignTestScreen = ({ navigation }) => {
         alert("비밀번호가 일치하지 않습니다.");
         return;
       }
+      setError(""); // 에러 초기화
+      // 아이디 중복 확인
+      if (progress === 2) {
+        const isUserIdExists = await checkUserIdExists(inputValues[1]);
+        if (isUserIdExists) {
+          alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력하세요.");
+          return;
+        }
+      }
       setProgress(progress + 1); // 진행 상태 증가
     } else {
       // 진행 상태가 6일 때 완료 처리
-      alert("회원가입이 완료되었습니다."); // 예시로 alert 창을 띄웠습니다.
-      navigation.navigate("login");
+      Alert.alert("회원가입이 완료되었습니다.", "", [{ text: "확인", onPress: () => navigation.navigate("login") }]);
       // 서버에 사용자 정보를 전송하는 함수 호출
       await sendUserDataToServer();
       // 완료 후 추가 작업을 수행할 수 있습니다.
@@ -62,6 +71,21 @@ const SignTestScreen = ({ navigation }) => {
       console.log('Data:', data);
     } catch (error) {
       console.error('Error:', error);
+    }
+  };
+
+  // 아이디 중복 검사 함수
+  const checkUserIdExists = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/UserId/${userId}/exists`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data; // true 또는 false 반환
+    } catch (error) {
+      console.error('Error:', error);
+      return false; // 네트워크 오류 등으로 인한 실패 시 false 반환
     }
   };
 
@@ -100,6 +124,8 @@ const SignTestScreen = ({ navigation }) => {
             fontSize: 24,
           }}
         />
+        {/* 에러 메시지 */}
+        {error !== "" && <Text style={{ color: "red" }}>{error}</Text>}
       </View>
       {/* 다음 버튼 */}
       <TouchableOpacity
