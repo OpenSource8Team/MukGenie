@@ -5,24 +5,34 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 // 버튼 컴포넌트
-const Button = ({ title, onPress }) => {
+const Button = ({ title, onPress, style }) => {
   return (
     <TouchableOpacity
-      style={{
-        width: 100,
-        height: 40,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#6750A4",
-        borderRadius: 90,
-        padding: 10,
-      }}
+      style={[
+        {
+          width: 250,
+          height: 60,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#000000",
+          fontWeight: "bold",
+          borderRadius: 10,
+          padding: 15,
+        },
+        style,
+      ]}
       onPress={onPress}
     >
-      <Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
+      <Text style={{ color: "#FFFFFF", fontSize: 18 }}>{title}</Text>
     </TouchableOpacity>
   );
 };
+
+const Link = ({ title, onPress }) => (
+  <TouchableOpacity onPress={onPress}>
+    <Text style={{ color: "#000000", fontSize: 16 }}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const LoginScreen = ({ navigation }) => {
   // 아이디와 비밀번호를 저장할 상태 변수
@@ -66,36 +76,44 @@ const LoginScreen = ({ navigation }) => {
         flex: 1,
         justifyContent: "space-between",
         backgroundColor: "#FFFFFF",
+        padding: 20,
       }}
     >
       {/* 상단 여백 */}
-      <View style={{ height: 40, padding: 12 }} />
+      <View style={{ height: 60 }} />
 
       {/* 로그인 패널 */}
       <View
         style={{
-          height: 180,
-          justifyContent: "space-between",
+          flex: 1,
+          justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#FFFFFF",
-          padding: 12,
+          padding: 20,
         }}
       >
+        {/* LOGIN 텍스트 */}
+        <View style={{ alignItems: "center" }}>
+          <Text style={{ fontSize: 36, fontWeight: "bold", marginBottom: 20, color: "black" }}>
+            LOGIN
+          </Text>
+        </View>
+
         {/* 아이디 입력란 */}
         <TextInput
           placeholder="ID"
           value={userId}
           onChangeText={setUserId}
           style={{
-            color: "#303033",
-            fontSize: 14,
-            width: 200,
-            height: 40,
+            color: "#000000",
+            fontSize: 16,
+            width: 250,
+            height: 50,
             backgroundColor: "#FFFFFF",
-            borderColor: "#C896FF",
-            borderRadius: 12,
+            borderColor: "#000000",
             borderWidth: 2,
-            padding: 12,
+            padding: 15,
+            marginBottom: 25,
           }}
         />
 
@@ -106,40 +124,43 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={setPassword}
           secureTextEntry={true}
           style={{
-            color: "#303033",
-            fontSize: 14,
-            width: 200,
-            height: 40,
+            color: "#000000",
+            fontSize: 16,
+            width: 250,
+            height: 50,
             backgroundColor: "#FFFFFF",
-            borderColor: "#C896FF",
-            borderRadius: 12,
+            borderColor: "#000000",
             borderWidth: 2,
-            padding: 12,
+            padding: 15,
+            marginBottom: 25,
           }}
         />
 
-        {/* 로그인 및 회원가입 버튼 패널 */}
-        <View
-          style={{
-            alignSelf: "stretch",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            backgroundColor: "#FFFFFF",
-            padding: 12,
-          }}
-        >
-          <Button title="로그인" onPress={handleLogin} />
-          <Button title="회원가입" onPress={() => navigation.navigate("signup")} />
+        {/* 로그인 버튼 */}
+        <Button title="LOGIN" onPress={handleLogin} />
+
+        {/* 회원가입, 아이디 찾기, 비밀번호 찾기 링크 */}
+        <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 30 }}>
+          <Link title="회원가입" onPress={() => navigation.navigate("signup")} />
+          <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
+          <Link title="아이디 찾기" onPress={() => Alert.alert("아이디 찾기")} />
+          <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
+          <Link title="비밀번호 찾기" onPress={() => Alert.alert("비밀번호 찾기")} />
         </View>
       </View>
 
       {/* 하단 바 */}
       <View
         style={{
+          width: "100%",
           height: 40,
-          backgroundColor: "#6750A4",
-          padding: 12,
+          backgroundColor: "#FFFFFF",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}
       />
     </SafeAreaView>
