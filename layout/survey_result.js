@@ -94,10 +94,10 @@ const ResultScreen = ({navigation}) =>{
 				}}>	
 				<Button
 					title ="유튜브로 검색하기!"
-					onPress={() => Linking.openURL(`https://www.youtube.com`)} 
+					onPress={() => Linking.openURL(`https://www.youtube.com`)}
 				/>
-				
-			</View>		
+
+			</View>
         )
     }
 
@@ -111,11 +111,11 @@ const ResultScreen = ({navigation}) =>{
 					alignSelf: "center",
 					backgroundColor: "#00C300",
 					borderRadius: 90,
-					padding: 10,	  
-				}}>	
+					padding: 10,
+				}}>
 				<Button
 					title ="네이버 맵으로 주변 음식점 검색하기!"
-					onPress={() => Linking.openURL(`https://map.naver.com`)} 
+					onPress={() => Linking.openURL(`https://map.naver.com`)}
 				/>
 				
 			</View>		

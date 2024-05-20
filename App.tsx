@@ -13,7 +13,7 @@ import { default as surveysetting } from "./layout/survey_setting";
 import { default as surveyresult } from "./layout/survey_result";
 import { default as surveyscreen } from "./layout/survey_screen";
 import { default as usersetting } from "./layout/user_setting";
-
+import { default as signtestscreen } from "./layout/signtest_screen";
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -40,6 +40,7 @@ function App() {
         <Stack.Screen name="signup" component={signupscreen}/>
         <Stack.Screen name="user" component={userscreen}/>
         <Stack.Screen name="usersetting" component={usersetting}/>
+         <Stack.Screen name="signtest" component={signtestscreen}/>
 
       </Stack.Navigator>
     </NavigationContainer>

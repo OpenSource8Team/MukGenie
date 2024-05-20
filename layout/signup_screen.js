@@ -61,48 +61,54 @@ const SignupScreen = ({ navigation }) => {
       });
   };
 
-  // 회원가입 버튼 클릭 시 실행되는 함수
-  const handleSignup = () => {
-    // 비밀번호와 비밀번호 확인 값이 일치하는지 확인
-    if (passwordValue !== passwordConfirmValue) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
-      return;
-    }
+ // 회원가입 버튼 클릭 시 실행되는 함수
+ const handleSignup = () => {
+   // 텍스트 필드 값이 비어 있는지 확인
+   if (!idValue || !passwordValue || !passwordConfirmValue || !nameValue) {
+     Alert.alert("모두 다 입력해 주세요.");
+     return;
+   }
 
-    // ID 중복 확인
-    if (isIdDuplicate) {
-      setErrorMessage("이미 사용 중인 ID입니다.");
-      return;
-    }
+   // 비밀번호와 비밀번호 확인 값이 일치하는지 확인
+   if (passwordValue !== passwordConfirmValue) {
+     setErrorMessage("비밀번호가 일치하지 않습니다.");
+     return;
+   }
 
-    // 서버에 회원가입 요청
-    fetch("http://localhost:8080/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: idValue,
-        userPw: passwordValue,
-        name: nameValue
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        Alert.alert("회원가입 성공");
-        navigation.navigate("login");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setErrorMessage("회원가입 중 오류가 발생했습니다.");
-        });
-    };
+   // ID 중복 확인
+   if (isIdDuplicate) {
+     setErrorMessage("이미 사용 중인 ID입니다.");
+     return;
+   }
+
+   // 서버에 회원가입 요청
+   fetch("http://localhost:8080/users", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json",
+     },
+     body: JSON.stringify({
+       userId: idValue,
+       userPw: passwordValue,
+       name: nameValue
+     }),
+   })
+     .then((response) => {
+       if (!response.ok) {
+         throw new Error("Network response was not ok");
+       }
+       return response.json();
+     })
+     .then((data) => {
+       console.log(data);
+       Alert.alert("회원가입 성공");
+       navigation.navigate("login");
+     })
+     .catch((error) => {
+       console.error("Error:", error);
+       setErrorMessage("회원가입 중 오류가 발생했습니다.");
+     });
+ };
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
@@ -114,12 +120,11 @@ const SignupScreen = ({ navigation }) => {
             value={idValue}
             onChangeText={setIdValue}
             style={{
-              color: "#303033",
+              color: "#000000",
               fontSize: 14,
               width: 200,
               height: 40,
               backgroundColor: "#FFFFFF",
-              borderColor: "#C896FF",
               borderRadius: 12,
               borderWidth: 2,
               padding: 12,
@@ -133,12 +138,11 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={setPasswordValue}
             secureTextEntry={true}
             style={{
-              color: "#303033",
+              color: "#000000",
               fontSize: 14,
               width: 200,
               height: 40,
               backgroundColor: "#FFFFFF",
-              borderColor: "#C896FF",
               borderRadius: 12,
               borderWidth: 2,
               padding: 12,
@@ -152,12 +156,11 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={setPasswordConfirmValue}
             secureTextEntry={true}
             style={{
-              color: "#303033",
+              color: "#000000",
               fontSize: 14,
               width: 200,
               height: 40,
               backgroundColor: "#FFFFFF",
-              borderColor: "#C896FF",
               borderRadius: 12,
               borderWidth: 2,
               padding: 12,
@@ -170,12 +173,11 @@ const SignupScreen = ({ navigation }) => {
             value={nameValue}
             onChangeText={setNameValue}
             style={{
-              color: "#303033",
+              color: "#000000",
               fontSize: 14,
               width: 200,
               height: 40,
               backgroundColor: "#FFFFFF",
-              borderColor: "#C896FF",
               borderRadius: 12,
               borderWidth: 2,
               padding: 12,
