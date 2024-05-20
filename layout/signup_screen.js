@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -36,7 +36,7 @@ const SignupScreen = ({ navigation }) => {
 
   // 중복되는 ID인지 확인하는 함수
   const handleCheckDuplicateId = () => {
-    fetch(`http://localhost:8080/users/UserId/${idValue}`)
+    fetch("http://localhost:8080/users/UserId/${idValue}")
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -82,8 +82,8 @@ const SignupScreen = ({ navigation }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: idValue,
-        user_pw: passwordValue,
+        userId: idValue,
+        userPw: passwordValue,
         name: nameValue
       }),
     })
@@ -95,8 +95,8 @@ const SignupScreen = ({ navigation }) => {
       })
       .then((data) => {
         console.log(data);
-        // 회원가입 성공 시 성공 화면으로 이동 (성공 화면은 별도로 구현해야 함)
-              //navigation.navigate("SuccessScreen");
+        Alert.alert("회원가입 성공");
+        navigation.navigate("login");
         })
         .catch((error) => {
           console.error("Error:", error);

@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
 
   // 로그인 버튼을 눌렀을 때 실행되는 함수
   const handleLogin = () => {
-    fetch("http://your-server-url.com/users/login", {
+    fetch("http://localhost:8080/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
         console.log(data);
         Alert.alert("로그인 성공");
         // 예를 들어, 로그인 성공 시 네비게이션 이동 등을 수행할 수 있습니다.
-        navigation.navigate("LoggedInScreen");
+        navigation.navigate("muk");
       })
       .catch((error) => {
         console.error(error);
@@ -130,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
           }}
         >
           <Button title="로그인" onPress={handleLogin} />
-          <Button title="회원가입" onPress={() => navigation.navigate("SignupScreen")} />
+          <Button title="회원가입" onPress={() => navigation.navigate("signup")} />
         </View>
       </View>
 
