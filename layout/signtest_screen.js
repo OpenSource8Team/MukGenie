@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from "react-native";
 
 const SignTestScreen = ({ navigation }) => {
-  const [inputValue, setInputValue] = useState(""); // 입력 값 상태
+  const [inputValues, setInputValues] = useState(["", "", "", "", "", ""]); // 입력 값 상태 배열
   const [progress, setProgress] = useState(1); // 진행 상태
 
   // 각 진행 상태에 대한 플레이스홀더 텍스트 배열
@@ -16,16 +16,57 @@ const SignTestScreen = ({ navigation }) => {
   ];
 
   // 다음 버튼 클릭 시 처리 함수
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (progress < 6) {
       // 다음으로 진행하기 전에 입력 값이 비어 있는지 확인
-      if (inputValue.trim() === "") {
+      if (inputValues[progress - 1].trim() === "") {
         alert(placeholderTexts[progress - 1] + "을(를) 입력하세요.");
         return;
       }
+      // 비밀번호 확인
+      if (progress === 4 && inputValues[2] !== inputValues[3]) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
       setProgress(progress + 1); // 진행 상태 증가
+    } else {
+      // 진행 상태가 6일 때 완료 처리
+      alert("회원가입이 완료되었습니다."); // 예시로 alert 창을 띄웠습니다.
+      navigation.navigate("login");
+      // 서버에 사용자 정보를 전송하는 함수 호출
+      await sendUserDataToServer();
+      // 완료 후 추가 작업을 수행할 수 있습니다.
     }
   };
+
+  // 서버에 사용자 정보를 전송하는 함수
+  const sendUserDataToServer = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/users", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: inputValues[0],
+          userId: inputValues[1],
+          userPw: inputValues[2],
+          birthDate: inputValues[4],
+          name: inputValues[5]
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Data:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  // 다음 버튼 텍스트 결정
+  const buttonText = progress === 6 ? "완료" : "다음";
 
   return (
     <SafeAreaView
@@ -45,8 +86,12 @@ const SignTestScreen = ({ navigation }) => {
         {/* 입력 필드 */}
         <TextInput
           placeholder={placeholderTexts[progress - 1] + "을(를) 입력하세요"}
-          value={inputValue}
-          onChangeText={setInputValue}
+          value={inputValues[progress - 1]}
+          onChangeText={(text) => {
+            const newInputValues = [...inputValues]; // 이전 상태 복사
+            newInputValues[progress - 1] = text; // 입력 값 업데이트
+            setInputValues(newInputValues); // 상태 업데이트
+          }}
           style={{
             height: 60,
             paddingHorizontal: 20,
@@ -59,7 +104,7 @@ const SignTestScreen = ({ navigation }) => {
       {/* 다음 버튼 */}
       <TouchableOpacity
         style={{
-          width: 400,
+          width: 350,
           height: 60,
           justifyContent: "center",
           alignItems: "center",
@@ -70,8 +115,8 @@ const SignTestScreen = ({ navigation }) => {
         }}
         onPress={handleButtonClick}
       >
-        <Text style={{ color: "#FFFFFF", fontSize: 24, fontWeight: "bold" }}>다음</Text>
-        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>{progress}/6</Text>
+        <Text style={{ color: "#FFFFFF", fontSize: 24, fontWeight: "bold" }}>{buttonText}</Text>
+        <Text style={{ color: "#FFFFFF", fontSize: 18, marginTop: 5 }}>{progress}/6</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
