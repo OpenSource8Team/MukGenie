@@ -24,7 +24,7 @@ function App() {
       <Stack.Navigator  initialRouteName = "MUK"
         screenOptions={{
           headerStyle: {
-          backgroundColor: '#6750A4', // 바탕색을 원하는 색상으로 변경합니다.
+          backgroundColor: '#3ED4BE', // 바탕색을 원하는 색상으로 변경합니다.
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

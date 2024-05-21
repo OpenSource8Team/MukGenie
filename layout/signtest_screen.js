@@ -143,7 +143,7 @@ const SignTestScreen = ({ navigation }) => {
           height: 60,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#6750A4",
+          backgroundColor: "#3ED4BE",
           borderRadius: 15,
           padding: 15,
           position: "relative",
