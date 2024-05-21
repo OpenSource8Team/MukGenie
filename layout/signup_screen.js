@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -20,50 +20,61 @@ const SignupScreen = ({ navigation }) => {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isIdDuplicate, setIsIdDuplicate] = useState(false);
 
-// 중복되는 ID인지 확인하는 함수
-const handleCheckDuplicateId = () => {
-  fetch(`http://localhost:8080/users/UserId/${idValue}`)
-    .then(response => {
-      if (response.ok) return response.json();
-      if (response.status === 404) return null; // ID가 존재하지 않는 경우
-      throw new Error("Network response was not ok");
-    })
-    .then(data => {
-      if (data !== null) {
-        setIsIdDuplicate(true);
-        setErrorMessage("중복되는 아이디입니다.");
-      } else {
-        setIsIdDuplicate(false);
-        setErrorMessage("중복되는 아이디가 없습니다.");
+  // 중복되는 ID인지 확인하는 함수
+  const checkUserIdExists = useCallback(async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/UserId/${userId}/exists`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      setErrorMessage("ID 확인 중 오류가 발생했습니다.");
-    });
-};
+      const data = await response.json();
+      console.log('Response data:', data); // 응답 데이터 로그 출력
+      return data; // 서버 응답이 true 또는 false만을 출력하는 경우 그대로 반환
+    } catch (error) {
+      console.error('Error:', error);
+      return false;
+    }
+  }, []);
 
+  // 중복 검사 핸들러
+  const handleCheckDuplicateId = useCallback(async () => {
+    try {
+      const data = await checkUserIdExists(idValue);
+      console.log('Response data:', data); // 추가 로그
+      if (data === true) {
+        Alert.alert("오류", "중복되는 아이디입니다.");
+      } else if (data === false) {
+        Alert.alert("확인", "사용 가능한 아이디입니다.");
+      } else {
+        console.error('Invalid server response:', data);
+        Alert.alert("오류", "잘못된 서버 응답이 수신되었습니다.");
+      }
+    } catch (error) {
+      console.error('Error in handleCheckDuplicateId:', error);
+      Alert.alert("오류", "중복 확인 중 오류가 발생했습니다.");
+    }
+  }, [checkUserIdExists, idValue]);
 
   // 회원가입 버튼 클릭 시 실행되는 함수
-  const handleSignup = () => {
+  const handleSignup = useCallback(async () => {
     // 텍스트 필드 값이 비어 있는지 확인
     if (!idValue || !passwordValue || !passwordConfirmValue || !nameValue) {
-      Alert.alert("모두 다 입력해 주세요.");
+      Alert.alert("오류", "모두 다 입력해 주세요.");
       return;
     }
 
     // 비밀번호와 비밀번호 확인 값이 일치하는지 확인
     if (passwordValue !== passwordConfirmValue) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+      Alert.alert("오류", "비밀번호가 일치하지 않습니다.");
       return;
     }
 
     // ID 중복 확인
-    if (isIdDuplicate) {
-      setErrorMessage("이미 사용 중인 ID입니다.");
+    const isUserIdExists = await checkUserIdExists(idValue);
+    console.log('isUserIdExists on Signup:', isUserIdExists); // 추가 로그
+    if (isUserIdExists) {
+      Alert.alert("오류", "이미 사용 중인 ID입니다.");
       return;
     }
 
@@ -84,15 +95,15 @@ const handleCheckDuplicateId = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        Alert.alert("회원가입 성공");
-        navigation.navigate("login");
+        Alert.alert("성공", "회원가입 성공", [
+          { text: "확인", onPress: () => navigation.navigate("login") }
+        ]);
       })
       .catch((error) => {
         console.error("Error:", error);
-        setErrorMessage("회원가입 중 오류가 발생했습니다.");
+        Alert.alert("오류", "회원가입 중 오류가 발생했습니다.");
       });
-  };
+  }, [idValue, passwordValue, passwordConfirmValue, nameValue, checkUserIdExists, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,7 +118,8 @@ const handleCheckDuplicateId = () => {
               onChangeText={setIdValue}
               style={[styles.textInput, { width: 200 }]}
             />
-            <Button title="중복확인" onPress={handleCheckDuplicateId} style={styles.checkButton} />
+            <Button title="중복확인" onPress={handleCheckDuplicateId} style={styles.checkButton}
+            />
           </View>
           {/* 비밀번호 입력 필드 */}
           <Text>비밀번호</Text>
@@ -138,8 +150,6 @@ const handleCheckDuplicateId = () => {
         </View>
         {/* 회원가입 버튼 */}
         <Button title="회원가입" onPress={handleSignup} style={styles.signupButton} />
-        {/* 오류 메시지 표시 */}
-        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       </View>
       <View style={styles.footer} />
     </SafeAreaView>
@@ -178,11 +188,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   checkButton: {
-      width: 100,
-      height: 40,
-      marginLeft: 10,
-      borderRadius: 0,
-    },
+    width: 90,
+    height: 40,
+    marginLeft: 10,
+    borderRadius: 0,
+  },
   button: {
     justifyContent: "center",
     alignItems: "center",
@@ -197,10 +207,6 @@ const styles = StyleSheet.create({
   signupButton: {
     width: 200,
     height: 40,
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
   },
   footer: {
     height: 70,
