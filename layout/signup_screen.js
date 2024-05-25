@@ -1,16 +1,51 @@
 import React, { useState, useCallback } from "react";
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-const Stack = createStackNavigator();
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+} from "react-native";
 
 // 버튼 컴포넌트: 사용자 정의 스타일이 적용된 재사용 가능한 버튼 컴포넌트
-const Button = ({ title, onPress, style }) => {
+const Button = ({ title, onPress, style, disable }) => {
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
+};
+
+// 비밀번호 조건 확인 함수
+const passwordRequirements = (password) => {
+  let upperCount = 0,
+    lowerCount = 0,
+    numericCount = 0;
+// for 문으로 비밀번호의 문자를 하나씩 대조하여 아스키코드로 변환, 해당 번호 폭에 맞으면, 카운트 증가.
+  if (password.length >= 9 && password.length <= 20) {
+    for (let i = 0; i < password.length; i++) {
+      let charCode = password.charCodeAt(i);
+
+      if (charCode >= 97 && charCode <= 122) {
+        // 소문자
+        lowerCount++;
+      } else if (charCode >= 65 && charCode <= 90) {
+        // 대문자
+        upperCount++;
+      } else if (charCode >= 48 && charCode <= 57) {
+        // 숫자
+        numericCount++;
+      }
+    }
+
+    if (lowerCount >= 3 && upperCount >= 3 && numericCount >= 3) {
+      return true;
+    }
+  }
+
+  return false;
 };
 
 // 회원가입 화면 컴포넌트
@@ -20,19 +55,28 @@ const SignupScreen = ({ navigation }) => {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [nameValue, setNameValue] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false);
+
+  // 비밀번호 변경 시 조건 확인
+  const handlePasswordChange = (text) => {
+    setPasswordValue(text);
+    setPasswordValid(passwordRequirements(text));
+  };
 
   // 중복되는 ID인지 확인하는 함수
   const checkUserIdExists = useCallback(async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8080/users/UserId/${userId}/exists`);
+      const response = await fetch(
+        `http://localhost:8080/users/UserId/${userId}/exists`
+      );
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log('Response data:', data); // 응답 데이터 로그 출력
+      console.log("Response data:", data); // 응답 데이터 로그 출력
       return data; // 서버 응답이 true 또는 false만을 출력하는 경우 그대로 반환
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       return false;
     }
   }, []);
@@ -41,17 +85,17 @@ const SignupScreen = ({ navigation }) => {
   const handleCheckDuplicateId = useCallback(async () => {
     try {
       const data = await checkUserIdExists(idValue);
-      console.log('Response data:', data); // 추가 로그
+      console.log("Response data:", data); // 추가 로그
       if (data === true) {
         Alert.alert("오류", "중복되는 아이디입니다.");
       } else if (data === false) {
         Alert.alert("확인", "사용 가능한 아이디입니다.");
       } else {
-        console.error('Invalid server response:', data);
+        console.error("Invalid server response:", data);
         Alert.alert("오류", "잘못된 서버 응답이 수신되었습니다.");
       }
     } catch (error) {
-      console.error('Error in handleCheckDuplicateId:', error);
+      console.error("Error in handleCheckDuplicateId:", error);
       Alert.alert("오류", "중복 확인 중 오류가 발생했습니다.");
     }
   }, [checkUserIdExists, idValue]);
@@ -70,9 +114,15 @@ const SignupScreen = ({ navigation }) => {
       return;
     }
 
+    // 비밀번호 조건 확인
+    if (!passwordValid) {
+      Alert.alert("오류", "비밀번호 요구사항에 맞춰주세요.");
+      return;
+    }
+
     // ID 중복 확인
     const isUserIdExists = await checkUserIdExists(idValue);
-    console.log('isUserIdExists on Signup:', isUserIdExists); // 추가 로그
+    console.log("isUserIdExists on Signup:", isUserIdExists); // 추가 로그
     if (isUserIdExists) {
       Alert.alert("오류", "이미 사용 중인 ID입니다.");
       return;
@@ -96,14 +146,22 @@ const SignupScreen = ({ navigation }) => {
       })
       .then((data) => {
         Alert.alert("성공", "회원가입 성공", [
-          { text: "확인", onPress: () => navigation.navigate("login") }
+          { text: "확인", onPress: () => navigation.navigate("login") },
         ]);
       })
       .catch((error) => {
         console.error("Error:", error);
         Alert.alert("오류", "회원가입 중 오류가 발생했습니다.");
       });
-  }, [idValue, passwordValue, passwordConfirmValue, nameValue, checkUserIdExists, navigation]);
+  }, [
+    idValue,
+    passwordValue,
+    passwordConfirmValue,
+    nameValue,
+    passwordValid,
+    checkUserIdExists,
+    navigation,
+  ]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,7 +176,10 @@ const SignupScreen = ({ navigation }) => {
               onChangeText={setIdValue}
               style={[styles.textInput, { width: 200 }]}
             />
-            <Button title="중복확인" onPress={handleCheckDuplicateId} style={styles.checkButton}
+            <Button
+              title="중복확인"
+              onPress={handleCheckDuplicateId}
+              style={styles.checkButton}
             />
           </View>
           {/* 비밀번호 입력 필드 */}
@@ -126,10 +187,18 @@ const SignupScreen = ({ navigation }) => {
           <TextInput
             placeholder="Password"
             value={passwordValue}
-            onChangeText={setPasswordValue}
+            onChangeText={handlePasswordChange}
             secureTextEntry={true}
             style={styles.textInput}
           />
+          {passwordValue.length > 0 && !passwordValid && (
+            <Text style={styles.validationText}>
+              소문자, 대문자, 숫자를 각각 3개 이상 포함해야 합니다.
+            </Text>
+          )}
+          {passwordValue.length > 0 && passwordValue.length < 9 && (
+            <Text style={styles.validationText}>9자 이상이여야 합니다.</Text>
+          )}
           {/* 비밀번호 확인 입력 필드 */}
           <Text>비밀번호 확인</Text>
           <TextInput
@@ -139,6 +208,11 @@ const SignupScreen = ({ navigation }) => {
             secureTextEntry={true}
             style={styles.textInput}
           />
+          {passwordValue != passwordConfirmValue && (
+            <Text style={styles.validationText}>
+              비밀번호 체크 값이 일치하지 않습니다.
+            </Text>
+          )}
           {/* 이름 입력 필드 */}
           <Text>이름</Text>
           <TextInput
@@ -149,7 +223,11 @@ const SignupScreen = ({ navigation }) => {
           />
         </View>
         {/* 회원가입 버튼 */}
-        <Button title="회원가입" onPress={handleSignup} style={styles.signupButton} />
+        <Button
+          title="회원가입"
+          onPress={handleSignup}
+          style={styles.signupButton}
+        />
       </View>
       <View style={styles.footer} />
     </SafeAreaView>
@@ -212,6 +290,10 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: "#6750A4",
     padding: 12,
+  },
+  validationText: {
+    color: "red",
+    fontSize: 10,
   },
 });
 

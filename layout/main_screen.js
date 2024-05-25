@@ -33,9 +33,9 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 
 const MainScreen = ({ navigation }) => { 
   
-  const buttonpane = () => {
+  const buttonpane = () => {//버튼 정렬하는 판
     return (
-      <View
+      <View 
         style={{
           height: 70,
           alignSelf: "stretch",
@@ -45,7 +45,7 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Button
+        <Button 
           title="유저"
           onPress={() => navigation.navigate("user")
         }
@@ -54,7 +54,7 @@ const MainScreen = ({ navigation }) => {
           title="시작"
           onPress={() => navigation.navigate("surveysetting")}
         />
-         <Button
+        <Button
                   title="테스트"
                   onPress={() => navigation.navigate("signtest")}
                 />
@@ -62,9 +62,9 @@ const MainScreen = ({ navigation }) => {
     );
   };
 
-  const mainpane = () => {
+  const mainpane = () => {//버튼과 이미지 정렬용
     return (
-      <View
+      <View 
         style={{
           flex: 1,
           justifyContent: "space-around",
@@ -73,7 +73,7 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Image
+        <Image //이미지, 로고나 캐릭터를 넣을 공간
           source={{ uri: "https://i.imgur.com/1tMFzp8.png" }}
           resizeMode={"stretch"}
           style={{ width: 300, height: 300 }}

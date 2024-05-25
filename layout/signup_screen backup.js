@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#3ED4BE",
+    backgroundColor: "#6750A4",
     borderRadius: 90,
     padding: 12,
   },
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 70,
-    backgroundColor: "#3ED4BE",
+    backgroundColor: "#6750A4",
     padding: 12,
   },
 });
