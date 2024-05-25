@@ -10,22 +10,22 @@ const Stack = createStackNavigator();
 */
 const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능하게 끔 색을 바꿈
 	return (
-	  <TouchableOpacity
+		<TouchableOpacity
 		style={{
-		  width: 150,
-		  height: 50,
-		  justifyContent: "center",
-		  alignItems: "center",
-		  backgroundColor: "#6750A4",
-		  borderRadius: 90,
-		  padding: 12,
+			width: 150,
+			height: 50,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: "#6750A4",
+			borderRadius: 90,
+			padding: 12,
 		}}
 		onPress={onPress}
-	  >
+		>
 		<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-	  </TouchableOpacity>
+		</TouchableOpacity>
 	);
-  };
+};
 
 const SurveySetting = ({navigation}) => {
 	const desctext = () => {
@@ -33,7 +33,6 @@ const SurveySetting = ({navigation}) => {
             <Text style = {{color: "#303233", fontSize: 20, textAlign: "center"}}>
 				{"먹지니를 시작 하기 전에,\n빠른 결과도출을 위해 설정해 주세요!"}
 			</Text>
-
         )
     }
 
@@ -48,7 +47,6 @@ const SurveySetting = ({navigation}) => {
 				}}>
 				{desctext()}
 			</View>
-
         )
     }
 
@@ -62,9 +60,13 @@ const SurveySetting = ({navigation}) => {
 					style = {{color: "#303233", fontSize: 14}}>
 					{"한식"}
 				</Text>
-				<Checkbox status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+				<Checkbox status={
+					checked ? 'checked' : 'unchecked'
+				}
+				onPress={() => {
+					setChecked(!checked);
+				}}
+			/>
 			</View>
 		)
 	}
@@ -80,8 +82,8 @@ const SurveySetting = ({navigation}) => {
 				</Text>
 				<Checkbox 
 					status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -96,9 +98,9 @@ const SurveySetting = ({navigation}) => {
 					{"일식"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -114,9 +116,9 @@ const SurveySetting = ({navigation}) => {
 					{"양식"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -157,9 +159,9 @@ const SurveySetting = ({navigation}) => {
 					{"밥"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -173,9 +175,9 @@ const SurveySetting = ({navigation}) => {
 					{"죽"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -189,9 +191,9 @@ const SurveySetting = ({navigation}) => {
 					{"면"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -205,9 +207,9 @@ const SurveySetting = ({navigation}) => {
 					{"빵"}
 				</Text>
 				<Checkbox
-      				status={checked ? 'checked' : 'unchecked'}
-      				onPress={() => {setChecked(!checked);}}
-    			/>
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
 			</View>
 		)
 	}
@@ -235,7 +237,6 @@ const SurveySetting = ({navigation}) => {
 				{foodnoodle()}
 				{foodbread()}
 			</View>
-
         )
     }
 
@@ -250,7 +251,6 @@ const SurveySetting = ({navigation}) => {
 				{country()}
 				{foodtype()}
 			</View>
-
         )
     }
 
@@ -274,7 +274,6 @@ const SurveySetting = ({navigation}) => {
 					{"뭐든 좋아요!"}
 				</Text>
 			</TouchableOpacity>
-
         )
     }
 
@@ -298,11 +297,8 @@ const SurveySetting = ({navigation}) => {
 					{"초기화"}
 				</Text>
 			</TouchableOpacity>
-
         )
     }
-
-  
 
     const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
         return (
@@ -313,7 +309,6 @@ const SurveySetting = ({navigation}) => {
 					padding: 12,
 				}}>
 			</View>
-
         )
     }
 
@@ -353,7 +348,6 @@ const SurveySetting = ({navigation}) => {
 			</View>
 			{botbar()}
 		</SafeAreaView>
-
     )
 }
 

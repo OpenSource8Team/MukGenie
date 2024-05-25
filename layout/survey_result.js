@@ -9,25 +9,25 @@ const Stack = createStackNavigator();
 	유튜브 api및 지도 api로 관련 음식점 혹은 영상 띄울것.
 */
 const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능하게 끔 색을 바꿈
-	return (
-	  <TouchableOpacity
+return (
+    <TouchableOpacity 
 		style={{
-		  width: 300,
-		  height: 40,
-		  justifyContent: "center",
-		  alignSelf: "center",
-		  alignItems: "center",
-		  borderRadius: 90,
-		  padding: 10,
+			width: 300,
+			height: 40,
+			justifyContent: "center",
+			alignSelf: "center",
+			alignItems: "center",
+			borderRadius: 90,
+			padding: 10,
 		}}
 		onPress={onPress}
-	  >
-		<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-	  </TouchableOpacity>
+	>
+	<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
+	</TouchableOpacity>
 	);
-  };
+};
 
-const ResultScreen = ({navigation}) =>{
+const ResultScreen = ({navigation}) =>{//결과값 출력 페이지.
 	const foodName = () => {
         return (
             <Text
@@ -37,7 +37,6 @@ const ResultScreen = ({navigation}) =>{
 				}}>
 				{"음식 이름"}
 			</Text>
-
         )
     }
 
@@ -50,11 +49,10 @@ const ResultScreen = ({navigation}) =>{
 				}}>
 				{"음식 설명"}
 			</Text>
-
         )
     }
 
-    const foodpane = () => {
+    const foodpane = () => {//음식이름-이미지-설명 순으로 배치.
         return (
             <View
 				style = {{
@@ -76,7 +74,6 @@ const ResultScreen = ({navigation}) =>{
 				/>
 				{foodDesc()}
 			</View>
-
         )
     }
 
@@ -96,7 +93,6 @@ const ResultScreen = ({navigation}) =>{
 					title ="유튜브로 검색하기!"
 					onPress={() => Linking.openURL(`https://www.youtube.com`)}
 				/>
-
 			</View>
         )
     }
@@ -117,7 +113,6 @@ const ResultScreen = ({navigation}) =>{
 					title ="네이버 맵으로 주변 음식점 검색하기!"
 					onPress={() => Linking.openURL(`https://map.naver.com`)}
 				/>
-				
 			</View>		
         )
     }
@@ -153,7 +148,6 @@ const ResultScreen = ({navigation}) =>{
 					padding: 12,
 				}}>
 			</View>
-
         )
     }
 
@@ -174,7 +168,6 @@ const ResultScreen = ({navigation}) =>{
 
     )
 }
-
 
 export default ResultScreen;
     

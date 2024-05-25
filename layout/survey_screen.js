@@ -23,24 +23,21 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 			onPress={onPress}
 		>
 			<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-	  </TouchableOpacity>
+	</TouchableOpacity>
 	);
-  };
+};
 
-const SurveyScreen = ({navigation}) => {
-
+const SurveyScreen = ({navigation}) => {//설문 화면.
 	const numbers = () => {//질문 넘버. 질문이 지날때마다 숫자가 올라가야 함
         return (
             <Text
 				style = {{
-					
 					color: "#303233",
 					fontSize: 20,
 					fontWeight: "bold",
 				}}>
 				{"질문 1"}
 			</Text>
-
         )
     }
 
@@ -53,7 +50,6 @@ const SurveyScreen = ({navigation}) => {
 				}}>
 				{"질문을 출력합니다."}
 			</Text>
-
         )
     }
 
@@ -85,7 +81,6 @@ const SurveyScreen = ({navigation}) => {
 					/>
 				</View>
 			</View>
-
         )
     }
 
@@ -97,12 +92,11 @@ const SurveyScreen = ({navigation}) => {
 					backgroundColor: "#6750A4",
 				}}>
 			</View>
-
         )
     }
 
     return (
-        <SafeAreaView //컴포넌트 배치도
+        <SafeAreaView //컴포넌트 배치도 버튼 배치도 여기 들어있음.
 			style = {{
 				flex: 1,
 				justifyContent: "space-between",
@@ -142,7 +136,7 @@ const SurveyScreen = ({navigation}) => {
 					<Button
 						title="답변 3"
 					/>
-					<Button
+					<Button 
 						title="결과 화면으로(테스트)"
 						onPress={() => navigation.navigate("result")}
 					/>
@@ -151,7 +145,6 @@ const SurveyScreen = ({navigation}) => {
 			</View>
 			{botbar()}
 		</SafeAreaView>
-
     )
 }
 
