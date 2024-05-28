@@ -36,7 +36,7 @@ const SurveyScreen = ({navigation}) => {//설문 화면.
 					fontSize: 20,
 					fontWeight: "bold",
 				}}>
-				{"질문 1"}
+				질문{/*질문 번호*/}
 			</Text>
         )
     }
@@ -48,7 +48,7 @@ const SurveyScreen = ({navigation}) => {//설문 화면.
 					color: "#303233",
 					fontSize: 14,
 				}}>
-				{"질문을 출력합니다."}
+				{/*질문의 내용*/}가요?
 			</Text>
         )
     }
@@ -118,26 +118,10 @@ const SurveyScreen = ({navigation}) => {//설문 화면.
 						alignItems: "center",
 					}}>
 					<Button
-						title="답변 1"
-					/>
-					<Button
-						title="답변 2"
-					/>
-				</View>
-				<View
-					
-					style = {{
-						height: 100,
-						flexDirection: "row",
-						justifyContent: "space-between",
-						alignItems: "center",
-						backgroundColor: "#FFFFFF",
-					}}>
-					<Button
-						title="답변 3"
+						title="예"
 					/>
 					<Button 
-						title="결과 화면으로(테스트)"
+						title="결과 화면으로(테스트)" //아니오 버튼이 될것임
 						onPress={() => navigation.navigate("result")}
 					/>
 										
