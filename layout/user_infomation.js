@@ -37,7 +37,7 @@ const InfoScreen = ({navigation}) => {// 스크린
 				style={{
 					fontSize : 20
 			}}
-			> 이름 : {namevalue}</Text>
+			> 이름     : {namevalue}</Text>
 		);
 	};
 
@@ -49,7 +49,7 @@ const InfoScreen = ({navigation}) => {// 스크린
 				style={{
 					fontSize : 20
 			}}
-			> 아이디 : {idvalue}</Text>
+			> 아이디   : {idvalue}</Text>
 		);
 	};
 
@@ -64,14 +64,14 @@ const InfoScreen = ({navigation}) => {// 스크린
 		);
 	};
 
-    const buttonpane = () => {//버튼을 놓을 판.
+    const buttonpane = () => {//버튼을 놓을 판, 유저 세팅으로 가는 버튼 삭제
         return (
             <View
 				style = {{
 					alignSelf: "stretch",
 					flexDirection: "row",
 					justifyContent: "space-around",
-					alignItems: "center",
+					alignItems: "cente",
 					backgroundColor: "#FFFFFF",
 					padding: 12,
 				}}>
@@ -79,10 +79,7 @@ const InfoScreen = ({navigation}) => {// 스크린
 						title ="로그아웃"
 						onPress={() => navigation.navigate("login")}
 				/>
-				<Button
-						title ="설정 변경"
-						onPress={() => navigation.navigate("usersetting")}
-				/>
+				
 			</View>
         )
     }
@@ -100,7 +97,7 @@ const InfoScreen = ({navigation}) => {// 스크린
 				{username()}
 				{userid()}
 				{userpw()}
-				{buttonpane()}
+		
 			</View>
         )
     }
@@ -136,6 +133,7 @@ const InfoScreen = ({navigation}) => {// 스크린
 			}}>
 			{blank()}
 			{infopane()}
+			{buttonpane()}
 			{botbar()}
 		</SafeAreaView>
     )

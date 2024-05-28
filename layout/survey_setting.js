@@ -50,15 +50,116 @@ const SurveySetting = ({navigation}) => {
         )
     }
 
-	//kostl 부터 westl 까지 한식~양식 체크박스.
-	const kostl = () => {
+	
+	//알러지 품목들 
+	const almilk = () => {
 		const [checked, setChecked] = React.useState(false);
 		return (
             <View
 				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center" 				}}>
 				<Text 
 					style = {{color: "#303233", fontSize: 14}}>
-					{"한식"}
+					{"유제품:"}
+				</Text>
+				<Checkbox status={checked ? 'checked' : 'unchecked'}
+					iconRight
+					iconType="material"
+					checkedIcon="clear"
+					uncheckedIcon="add"
+					checkedColor="red"
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const alpeach = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+				<Text 
+					style = {{color: "#303233", fontSize: 14,}}>
+					{"복숭아:"}
+				</Text>
+				<Checkbox 
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const alsea = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"어패류:"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	
+	const alnut = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"땅콩:"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+    const allergic = () => {
+		return (
+            <View
+				style = {{
+					height: 70,
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#303233",
+						fontSize: 14,
+					}}>
+					{"알러지 : "}
+				</Text>
+				{almilk()}
+				{alnut()}
+				{alpeach()}
+				{alsea()}
+			</View>
+        )
+    }
+
+	//kostl 부터 westl 까지 한식~양식 체크박스.
+	const kostl = () => {
+		const [checked, setChecked] = React.useState(true);
+		return (
+            <View
+				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center" 				}}>
+				<Text 
+					style = {{color: "#303233", fontSize: 14}}>
+					{"한식:"}
 				</Text>
 				<Checkbox status={
 					checked ? 'checked' : 'unchecked'
@@ -72,13 +173,13 @@ const SurveySetting = ({navigation}) => {
 	}
 
 	const cnstl = () => {
-		const [checked, setChecked] = React.useState(false);
+		const [checked, setChecked] = React.useState(true);
 		return (
             <View
 				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 				<Text 
 					style = {{color: "#303233", fontSize: 14,}}>
-					{"중식"}
+					{"중식:"}
 				</Text>
 				<Checkbox 
 					status={checked ? 'checked' : 'unchecked'}
@@ -95,7 +196,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"일식"}
+					{"일식:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -113,7 +214,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"양식"}
+					{"양식:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -156,7 +257,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"밥"}
+					{"밥:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -172,7 +273,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"죽"}
+					{"죽:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -188,7 +289,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"면"}
+					{"면:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -204,7 +305,7 @@ const SurveySetting = ({navigation}) => {
 				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
 				<Text
 					style = {{color: "#303233",fontSize: 14,}}>
-					{"빵"}
+					{"빵:"}
 				</Text>
 				<Checkbox
 					status={checked ? 'checked' : 'unchecked'}
@@ -240,6 +341,137 @@ const SurveySetting = ({navigation}) => {
         )
     }
 
+	const nogosu = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"고수:"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const nomint = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"민트"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const noegg = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"계란"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const nocucumber = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"오이"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const noeggplant = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"가지"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+const nobrocolli = () => {
+		const [checked, setChecked] = React.useState(false);
+		return (
+            <View
+				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
+				<Text
+					style = {{color: "#303233",fontSize: 14,}}>
+					{"브로콜리"}
+				</Text>
+				<Checkbox
+					status={checked ? 'checked' : 'unchecked'}
+					onPress={() => {setChecked(!checked);}}
+				/>
+			</View>
+		)
+	}
+
+	const nofood = () => {
+        return (
+            <View
+				style = {{
+					height: 70,
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12,
+				}}>
+				<Text
+					style = {{
+						color: "#303233",
+						fontSize: 14,
+					}}>
+					{"호불호: "}
+				</Text>
+				{nogosu()}
+				{nomint()}
+				{noegg()}
+				{nocucumber()}
+				{noeggplant()}
+				{nobrocolli()}
+
+			</View>
+        )
+    }
+
     const checkboxpane = () => {
         return (
             <View
@@ -250,6 +482,8 @@ const SurveySetting = ({navigation}) => {
 				}}>
 				{country()}
 				{foodtype()}
+				{allergic()}
+				{nofood()}
 			</View>
         )
     }
@@ -266,13 +500,9 @@ const SurveySetting = ({navigation}) => {
 					borderRadius: 90,
 					padding: 12,
 				}}>
-				<Text
-					style = {{
-						color: "#FFFFFF",
-						fontSize: 14,
-					}}>
-					{"뭐든 좋아요!"}
-				</Text>
+				<Button
+						title =" 뭐든 좋아요!"
+				/>
 			</TouchableOpacity>
         )
     }
