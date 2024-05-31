@@ -39,7 +39,7 @@ const passwordRequirements = (password) => {
         numericCount++;
       }
     }
-
+//카운트가 3이상이면
     if (lowerCount >= 3 && upperCount >= 3 && numericCount >= 3) {
       return true;
     }

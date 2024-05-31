@@ -1,584 +1,209 @@
-import React,{useState} from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Checkbox } from 'react-native-paper';
+
 const Stack = createStackNavigator();
 
 /* 	설문 설정 스크린의 역할:
 	설문을 시작하기 전, 사용자의 취향에 따라 품목을 설정.
-	라디오 버튼으로 설정할 예정. 
-*/
-const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능하게 끔 색을 바꿈
+	라디오 버튼으로 설정할 예정. <- 버튼으로 바꿈 */
+const Button = ({ title, onPress }) => {
 	return (
 		<TouchableOpacity
-		style={{
-			width: 150,
-			height: 50,
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: "#6750A4",
-			borderRadius: 90,
-			padding: 12,
-		}}
-		onPress={onPress}
+			style={{	
+				marginHorizontal: 5,
+				fontSize: 14,
+				backgroundColor: "#6750A4",
+				padding: 10,
+				borderRadius: 5
+			}}
+			onPress={onPress}
 		>
-		<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
+			<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
 		</TouchableOpacity>
 	);
 };
 
-const SurveySetting = ({navigation}) => {
-	const desctext = () => {
-        return (
-            <Text style = {{color: "#303233", fontSize: 20, textAlign: "center"}}>
-				{"먹지니를 시작 하기 전에,\n빠른 결과도출을 위해 설정해 주세요!"}
-			</Text>
-        )
-    }
+const SelectedButton = ({ title, onRemove }) => {
+	return (
+		<TouchableOpacity
+			style={{
+				margin: 5,
+				fontSize: 14,
+				backgroundColor: "#FF0000",
+				padding: 10,
+				borderRadius: 5
+			}}
+			onPress={onRemove}
+		>
+			<Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
+		</TouchableOpacity>
+	);
+};
 
-    const descpane = () => {
-        return (
-            <View
-				style = {{
-					height: 170,
-					justifyContent: "center",
-					backgroundColor: "#FFFFFF",
-					padding: 12,
-				}}>
-				{desctext()}
-			</View>
-        )
-    }
+const SurveySetting = ({ navigation }) => {
+	const [selectedItems, setSelectedItems] = useState([]);
 
-	
-	//알러지 품목들 
-	const almilk = () => {
-		const [checked, setChecked] = React.useState(false);
+	const handleSelectItem = (item) => {
+		setSelectedItems((prevItems) => {
+			if (prevItems.includes(item)) {
+				return prevItems;
+			}
+			return [...prevItems, item];
+		});
+	};
+
+	const handleRemoveItem = (item) => {
+		setSelectedItems((prevItems) => prevItems.filter((i) => i !== item));
+	};
+
+	const desel1 = () => {
 		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center" 				}}>
-				<Text 
-					style = {{color: "#303233", fontSize: 14}}>
-					{"유제품:"}
-				</Text>
-				<Checkbox status={checked ? 'checked' : 'unchecked'}
-					iconRight
-					iconType="material"
-					checkedIcon="clear"
-					uncheckedIcon="add"
-					checkedColor="red"
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const alpeach = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-				<Text 
-					style = {{color: "#303233", fontSize: 14,}}>
-					{"복숭아:"}
-				</Text>
-				<Checkbox 
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const alsea = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"어패류:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	
-	const alnut = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"땅콩:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-    const allergic = () => {
-		return (
-            <View
-				style = {{
+			<View
+				style={{
 					height: 70,
 					flexDirection: "row",
 					justifyContent: "center",
 					alignItems: "center",
 					backgroundColor: "#FFFFFF",
 					padding: 12,
-				}}>
-				<Text
-					style = {{
-						color: "#303233",
-						fontSize: 14,
-					}}>
-					{"알러지 : "}
-				</Text>
-				{almilk()}
-				{alnut()}
-				{alpeach()}
-				{alsea()}
-			</View>
-        )
-    }
-
-	//kostl 부터 westl 까지 한식~양식 체크박스.
-	const kostl = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center" 				}}>
-				<Text 
-					style = {{color: "#303233", fontSize: 14}}>
-					{"한식:"}
-				</Text>
-				<Checkbox status={
-					checked ? 'checked' : 'unchecked'
-				}
-				onPress={() => {
-					setChecked(!checked);
 				}}
-			/>
+			>
+				<Button title="유제품" onPress={() => handleSelectItem("유제품")} />
+				<Button title="밀가루" onPress={() => handleSelectItem("밀가루")} />
+				<Button title="땅콩" onPress={() => handleSelectItem("땅콩")} />
+				<Button title="견과류" onPress={() => handleSelectItem("견과류")} />
+				<Button title="대두" onPress={() => handleSelectItem("대두")} />
+				<Button title="과일" onPress={() => handleSelectItem("과일")} />
+				
 			</View>
-		)
-	}
+		);
+	};
 
-	const cnstl = () => {
-		const [checked, setChecked] = React.useState(true);
+	const desel2 = () => {
 		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-				<Text 
-					style = {{color: "#303233", fontSize: 14,}}>
-					{"중식:"}
-				</Text>
-				<Checkbox 
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const jpstl = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"일식:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	
-	const westl = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"양식:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-    const country = () => {
-		return (
-            <View
-				style = {{
+			<View
+				style={{
 					height: 70,
 					flexDirection: "row",
 					justifyContent: "center",
 					alignItems: "center",
-					backgroundColor: "#FFFFFF",
 					padding: 12,
-				}}>
-				<Text
-					style = {{
-						color: "#303233",
-						fontSize: 14,
-					}}>
-					{"국가 분류: "}
-				</Text>
-				{kostl()}
-				{cnstl()}
-				{jpstl()}
-				{westl()}
+				}}
+			>
+				<Button title="채소" onPress={() => handleSelectItem("채소")} />
+				<Button title="복숭아" onPress={() => handleSelectItem("복숭아")} />
+				<Button title="육류" onPress={() => handleSelectItem("육류")} />
+				<Button title="해산물 및 어패류" onPress={() => handleSelectItem("해산물 및 어패류")} />
+				<Button title="고수" onPress={() => handleSelectItem("고수")} />
 			</View>
-        )
-    }
+		);
+	};
 
-	const foodrice = () => {
-		const [checked, setChecked] = React.useState(true);
+	const desel3 = () => {
 		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"밥:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-	const foodsoup = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"죽:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-	const foodnoodle = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"면:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-	const foodbread = () => {
-		const [checked, setChecked] = React.useState(true);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"빵:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-    const foodtype = () => {
-        return (
-            <View
-				style = {{
+			<View
+				style={{
 					height: 70,
 					flexDirection: "row",
 					justifyContent: "center",
 					alignItems: "center",
-					backgroundColor: "#FFFFFF",
 					padding: 12,
-				}}>
-				<Text
-					style = {{
-						color: "#303233",
-						fontSize: 14,
-					}}>
-					{"음식 종류: "}
-				</Text>
-				{foodrice()}
-				{foodsoup()}
-				{foodnoodle()}
-				{foodbread()}
+				}}
+			>
+				<Button title="민트" onPress={() => handleSelectItem("민트")} />
+				<Button title="계란" onPress={() => handleSelectItem("계란")} />
+				<Button title="오이" onPress={() => handleSelectItem("오이")} />
+				<Button title="가지" onPress={() => handleSelectItem("가지")} />
+				<Button title="브로콜리" onPress={() => handleSelectItem("브로콜리")} />
 			</View>
-        )
-    }
+		);
+	};
 
-	const nogosu = () => {
-		const [checked, setChecked] = React.useState(false);
+	const checkboxpane = () => {
 		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"고수:"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const nomint = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"민트"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const noegg = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"계란"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const nocucumber = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"오이"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const noeggplant = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"가지"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-const nobrocolli = () => {
-		const [checked, setChecked] = React.useState(false);
-		return (
-            <View
-				style = {{height: 70,flexDirection: "row",justifyContent: "center",alignItems: "center"}}>
-				<Text
-					style = {{color: "#303233",fontSize: 14,}}>
-					{"브로콜리"}
-				</Text>
-				<Checkbox
-					status={checked ? 'checked' : 'unchecked'}
-					onPress={() => {setChecked(!checked);}}
-				/>
-			</View>
-		)
-	}
-
-	const nofood = () => {
-        return (
-            <View
-				style = {{
-					height: 70,
-					flexDirection: "row",
-					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "#FFFFFF",
-					padding: 12,
-				}}>
-				<Text
-					style = {{
-						color: "#303233",
-						fontSize: 14,
-					}}>
-					{"호불호: "}
-				</Text>
-				{nogosu()}
-				{nomint()}
-				{noegg()}
-				{nocucumber()}
-				{noeggplant()}
-				{nobrocolli()}
-
-			</View>
-        )
-    }
-
-    const checkboxpane = () => {
-        return (
-            <View
-				style = {{
+			<View
+				style={{
 					flex: 1,
 					justifyContent: "center",
-					padding: 12,
-				}}>
-				{country()}
-				{foodtype()}
-				{allergic()}
-				{nofood()}
+					padding: 12
+				}}
+			>
+				{desel1()}
+				{desel2()}
+				{desel3()}
 			</View>
-        )
-    }
+		);
+	}
 
-    const all_button = () => {
-        return (
-            <TouchableOpacity
-				style = {{
-					width: 150,
-					height: 50,
+	const selectedPane = () => {
+		return (
+			<View
+				style={{
+					flexDirection: "row",
+					flexWrap: "wrap",
 					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "#6750A4",
-					borderRadius: 90,
+					backgroundColor: "#E0E0E0",
 					padding: 12,
-				}}>
-				<Button
-						title =" 뭐든 좋아요!"
-				/>
-			</TouchableOpacity>
-        )
-    }
+					marginVertical: 10,
+					borderRadius: 5
+				}}
+			>
+				{selectedItems.map((item, index) => (
+					<SelectedButton key={index} title={item} onRemove={() => handleRemoveItem(item)} />
+				))}
+			</View>
+		);
+	}
 
-    const clear_button = () => {
-        return (
-            <TouchableOpacity
-				style = {{
-					width: 150,
-					height: 50,
-					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "#6750A4",
-					borderRadius: 90,
-					padding: 12,
-				}}>
-				<Text
-					style = {{
-						color: "#FFFFFF",
-						fontSize: 14,
-					}}>
-					{"초기화"}
-				</Text>
-			</TouchableOpacity>
-        )
-    }
-
-    const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
-        return (
-            <View
-				style = {{
+	const botbar = () => {
+		return (
+			<View
+				style={{
 					height: 40,
 					backgroundColor: "#6750A4",
 					padding: 12,
-				}}>
-			</View>
-        )
-    }
+				}}
+			/>
+		);
+	}
 
-    return (
-        <SafeAreaView
-			style = {{
+	return (
+		<SafeAreaView
+			style={{
 				flex: 1,
 				justifyContent: "space-between",
-				backgroundColor: "#FFFFFF",
-			}}>
-			{descpane()}
+				backgroundColor: "#FFFFFF"
+			}}
+		>
+			<View
+				style={{
+					height: 100,
+					justifyContent: "center",
+					backgroundColor: "#FFFFFF",
+					padding: 12
+				}}
+			>
+				<Text style={{ color: "#303233", fontSize: 20, textAlign: "center" }}>
+					{"원하지 않는 재료들을 설정해 주세요!"}
+				</Text>
+			</View>
+			
+
+			{selectedPane()}
 			{checkboxpane()}
 			<View
-				style = {{
-					height: 70,
-					flexDirection: "row",
-					justifyContent: "space-around",
-					alignItems: "center",
-					backgroundColor: "#FFFFFF",
-					padding: 12,
-				}}>
-				{all_button()}
-				{clear_button()}
-			</View>
-			<View
-				style = {{
+				style={{
 					height: 70,
 					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "#FFFFFF",
-					padding: 12,
-				}}>
-				<Button
-						title ="먹지니 시작하기!"
-						onPress={() => navigation.navigate("survey")}
-				/>
+					alignItems: "center"
+				}}
+			>
+				<Button title="먹지니 시작하기!" onPress={() => navigation.navigate("survey")} />
 			</View>
 			{botbar()}
 		</SafeAreaView>
-    )
+	);
 }
 
 export default SurveySetting;
