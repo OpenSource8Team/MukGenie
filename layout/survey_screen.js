@@ -4,10 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-/* 설문 스크린의 역할:
-    질문에 맞춰 설문하는 버튼. 4버튼에서 예 아니오 2버튼으로 바꿈
-    질문이 나오는 방식은 signtest_screen에서 참조*/
-
 // 버튼 컴포넌트
 const Button = ({ title, onPress }) => {
     return (
@@ -28,7 +24,7 @@ const Button = ({ title, onPress }) => {
     );
 };
 
-// 질문 그룹  4개의 그룹에
+// 질문 그룹
 const questionGroups = [
     [
         "한국 음식을 먹고 싶은가요?",
@@ -73,15 +69,7 @@ const SurveyScreen = ({ navigation }) => {
             setGroupIndex(groupIndex + 1); // 다음 질문 그룹으로 이동
             setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
         } else {
-            console.log("test")
-            fetch("http://localhost:8080/foods/arff") // GET request
-                .then((response) => {
-                    // Handle the response if needed
-                    navigation.navigate("result"); // Navigate to the result screen
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
+            navigation.navigate("result"); // Navigate to the result screen
         }
     };
 
