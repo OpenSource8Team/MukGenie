@@ -22,7 +22,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
         alignItems: "center",
         backgroundColor: "#6750A4",
         borderRadius: 90,
-        padding: 12,
+        padding: 5,
       }}
       onPress={onPress}
     >
@@ -32,9 +32,10 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 };
 
 const MainScreen = ({ navigation }) => { 
-  const buttonpane = () => {
+  
+  const buttonpane = () => {//버튼 정렬하는 판
     return (
-      <View
+      <View 
         style={{
           height: 70,
           alignSelf: "stretch",
@@ -44,25 +45,26 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate("login")}
+        <Button 
+          title="유저"
+          onPress={() => navigation.navigate("user")
+        }
         />
         <Button
-          title="Start"
+          title="시작"
           onPress={() => navigation.navigate("surveysetting")}
         />
         <Button
-          title="Log"
-          onPress={() => navigation.navigate("logs")}
-        />
+                  title="테스트"
+                  onPress={() => navigation.navigate("signtest")}
+                />
       </View>
     );
   };
 
-  const mainpane = () => {
+  const mainpane = () => {//버튼과 이미지 정렬용
     return (
-      <View
+      <View 
         style={{
           flex: 1,
           justifyContent: "space-around",
@@ -71,7 +73,7 @@ const MainScreen = ({ navigation }) => {
           padding: 12,
         }}
       >
-        <Image
+        <Image //이미지, 로고나 캐릭터를 넣을 공간
           source={{ uri: "https://i.imgur.com/1tMFzp8.png" }}
           resizeMode={"stretch"}
           style={{ width: 300, height: 300 }}
@@ -81,7 +83,7 @@ const MainScreen = ({ navigation }) => {
     );
   };
 
-  const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용. 다른 스크린의 바텀바도 이하 동문.
+  const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
     return <View style={{ height: 40, backgroundColor: "#6750A4", padding: 12 }} />;
   };
 

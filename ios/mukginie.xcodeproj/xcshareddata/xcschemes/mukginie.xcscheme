@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "mukgenie.app"
-               BlueprintName = "mukgenie"
-               ReferencedContainer = "container:mukgenie.xcodeproj">
+               BuildableName = "mukginie.app"
+               BlueprintName = "mukginie"
+               ReferencedContainer = "container:mukginie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "mukgenieTests.xctest"
-               BlueprintName = "mukgenieTests"
-               ReferencedContainer = "container:mukgenie.xcodeproj">
+               BuildableName = "mukginieTests.xctest"
+               BlueprintName = "mukginieTests"
+               ReferencedContainer = "container:mukginie.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mukgenie.app"
-            BlueprintName = "mukgenie"
-            ReferencedContainer = "container:mukgenie.xcodeproj">
+            BuildableName = "mukginie.app"
+            BlueprintName = "mukginie"
+            ReferencedContainer = "container:mukginie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mukgenie.app"
-            BlueprintName = "mukgenie"
-            ReferencedContainer = "container:mukgenie.xcodeproj">
+            BuildableName = "mukginie.app"
+            BlueprintName = "mukginie"
+            ReferencedContainer = "container:mukginie.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

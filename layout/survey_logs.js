@@ -7,9 +7,11 @@ const Stack = createStackNavigator();
 /* 	로그 스크린의 역할:
 	사용자의 설문 결과 값을 저장할 예정.
 	내용은 일자/설문 결과값?
+
+	현재는 사용하지 않을 예정.
 */
 
-const LogsScreen = ({navigation}) => {
+const LogsScreen = () => {
 	const list_desc = () => {
         return (
             <Text
@@ -23,7 +25,7 @@ const LogsScreen = ({navigation}) => {
         )
     }
 
-    const list_example = ({item, index}) => {
+    const list_example = ({item, index}) => {//DB에서 값을 받아와 리스트에 입력 및 출력할 곳
         return (
             <View
 				style = {{
@@ -39,7 +41,7 @@ const LogsScreen = ({navigation}) => {
         )
     }
 
-    const botbar = () => {
+    const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
         return (
             <View
 				style = {{

@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface mukgenieTests : XCTestCase
+@interface mukginieTests : XCTestCase
 
 @end
 
-@implementation mukgenieTests
+@implementation mukginieTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {
