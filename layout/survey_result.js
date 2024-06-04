@@ -51,7 +51,7 @@ const ResultScreen = ({navigation}) => {
 
     const ytbutton = () => (
         <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#CD201F", borderRadius: 90, padding: 10 }}>
-            <Button title="유튜브로 검색하기!" onPress={() => Linking.openURL(`https://www.youtube.com`)} />
+            <Button title="유튜브로 검색하기!" onPress={() => Linking.openURL(`https://www.youtube.com/results?search_query=.`+ foodName.MemoizedText)} />
         </View>
     );
 

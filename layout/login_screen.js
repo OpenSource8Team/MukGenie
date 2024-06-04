@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createStackNavigator();
 
 // 버튼 컴포넌트
@@ -51,25 +51,43 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("로그인 실패");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // 서버에서 반환된 데이터에 따라 처리
-        console.log(data);
-        Alert.alert("로그인 성공");
-        // 예를 들어, 로그인 성공 시 네비게이션 이동 등을 수행할 수 있습니다.
-        navigation.navigate("muk");
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
-      });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("로그인 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // 서버에서 반환된 데이터에 따라 처리
+      console.log(data);
+      // 토큰을 AsyncStorage에 저장
+      AsyncStorage.setItem('userToken', data.token);
+      Alert.alert("로그인 성공");
+      // 예를 들어, 로그인 성공 시 네비게이션 이동 등을 수행할 수 있습니다.
+      navigation.navigate("muk");
+    })
+    .catch((error) => {
+      console.error(error);
+      Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
+    });
   };
-
+  
+  // 어플리케이션 시작 시에 로그인 여부를 확인하여 네비게이션 결정
+  const checkLoginStatus = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken !== null) {
+        // 토큰이 존재하면 로그인 상태로 간주하여 홈으로 이동
+        navigation.navigate('muk');
+      } else {
+        // 토큰이 없으면 로그인 화면으로 이동
+        navigation.navigate('LoginScreen');
+      }
+    } catch (error) {
+      console.error(error);
+      // 에러 처리
+    }
+  };
   return (
     <SafeAreaView
       style={{

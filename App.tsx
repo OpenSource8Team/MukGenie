@@ -1,36 +1,53 @@
-import React from "react";
-//모듈 임포트
-import { NavigationContainer } from "@react-navigation/native"; //네비게이션 모듈. 각 화면을 이동하는데에 사용됨
-import { createStackNavigator } from "@react-navigation/stack"; //네비게이션 스택 모듈. 이전 화면으로 이동하는
-import { enableScreens } from 'react-native-screens';//화면 출력에 필요한 모듈.
+import React, { useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { enableScreens } from 'react-native-screens';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//화면들을 임포트 시킴
-import { default as mainscreen } from "./layout/main_screen";
-import { default as loginscreen } from "./layout/login_screen";
-import { default as signupscreen } from "./layout/signup_screen";
-import { default as userscreen } from "./layout/user_infomation";
-import { default as surveysetting } from "./layout/survey_setting";
-import { default as surveyresult } from "./layout/survey_result";
-import { default as surveyscreen } from "./layout/survey_screen";
-import { default as usersetting } from "./layout/user_setting";
-import { default as signtestscreen } from "./layout/signtest_screen";
+//임포트 된 화면들
+import mainscreen from "./layout/main_screen";
+import loginscreen from "./layout/login_screen";
+import signupscreen from "./layout/signup_screen";
+import userscreen from "./layout/user_infomation";
+import surveysetting from "./layout/survey_setting";
+import surveyresult from "./layout/survey_result";
+import surveyscreen from "./layout/survey_screen";
+import usersetting from "./layout/user_setting";
+import signtestscreen from "./layout/signtest_screen";
 
 enableScreens();
 const Stack = createStackNavigator();
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const userToken = await AsyncStorage.getItem('userToken');
+        // userToken이 존재하면 로그인된 상태로 간주하고 홈 화면으로 이동
+        // 그렇지 않다면 로그인 화면으로 이동
+        // navigation 객체가 필요하여 사용하려면, 어디서 이 객체를 가져오는지 알 필요가 있습니다.
+        // 여기에서는 Stack.Navigator에서 어떤 방식으로 navigation 객체를 가져오는지 모르기 때문에 이 부분은 수정이 필요합니다.
+        // navigation.navigate(userToken ? 'muk' : 'LoginScreen');
+      } catch (error) {
+        console.error(error);
+        // 에러 처리
+      }
+    };
+    checkLoginStatus();
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator  initialRouteName = "MUK"
+      <Stack.Navigator initialRouteName="muk"
         screenOptions={{
           headerStyle: {
-          backgroundColor: '#3ED4BE', // 바탕색을 원하는 색상으로 변경합니다.
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }} // 스택으로 올릴 화면들
+            backgroundColor: '#3ED4BE',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       >
         <Stack.Screen name="muk" component={mainscreen} />
         <Stack.Screen name="surveysetting" component={surveysetting} />
@@ -40,8 +57,7 @@ function App() {
         <Stack.Screen name="signup" component={signupscreen}/>
         <Stack.Screen name="user" component={userscreen}/>
         <Stack.Screen name="usersetting" component={usersetting}/>
-         <Stack.Screen name="signtest" component={signtestscreen}/>
-
+        <Stack.Screen name="signtest" component={signtestscreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
