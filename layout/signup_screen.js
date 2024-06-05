@@ -1,18 +1,10 @@
 import React, { useState, useCallback } from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import {SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert, StyleSheet} from "react-native";
 
 // 버튼 컴포넌트: 사용자 정의 스타일이 적용된 재사용 가능한 버튼 컴포넌트
 const Button = ({ title, onPress, style, disable }) => {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress} disabled={disable}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -23,7 +15,7 @@ const passwordRequirements = (password) => {
   let upperCount = 0,
     lowerCount = 0,
     numericCount = 0;
-// for 문으로 비밀번호의 문자를 하나씩 대조하여 아스키코드로 변환, 해당 번호 폭에 맞으면, 카운트 증가.
+
   if (password.length >= 9 && password.length <= 20) {
     for (let i = 0; i < password.length; i++) {
       let charCode = password.charCodeAt(i);
@@ -39,7 +31,7 @@ const passwordRequirements = (password) => {
         numericCount++;
       }
     }
-//카운트가 3이상이면
+
     if (lowerCount >= 3 && upperCount >= 3 && numericCount >= 3) {
       return true;
     }
