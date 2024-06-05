@@ -77,7 +77,11 @@ const InfoScreen = ({navigation}) => {// 스크린
 				}}>
 				<Button
 						title ="로그아웃"
-						onPress={() => navigation.navigate("login")}
+						onPress={() => navigation.reset({
+							index: 0,
+							routes: [{ name: 'login' }],
+							})
+						}
 				/>
 				
 			</View>

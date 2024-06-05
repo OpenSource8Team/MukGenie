@@ -37,7 +37,11 @@ const questionGroups = [
         "채소가 중심인 음식을 먹고 싶은가요?",
         "과일이 중심인 음식을 먹고 싶은가요?",
         "곡류가 중심인 음식을 먹고 싶은가요?",
+<<<<<<< Updated upstream
          "해산물이 중심인 음식을 먹고 싶은가요?",
+=======
+        "해산물이 중심인 음식을 먹고 싶은가요?",
+>>>>>>> Stashed changes
     ],
     [
         "뜨거운 음식을 먹고 싶은가요?",
@@ -50,8 +54,13 @@ const questionGroups = [
         "삶거나 찐 음식을 먹고 싶은가요?",
         "튀긴 음식을 먹고 싶은가요?",
         "구운 음식을 먹고 싶은가요?",
+<<<<<<< Updated upstream
         "볶은 음식을 먹고 싶은가요?", // 추가된 질문
         "비조리 음식을 먹고 싶은가요?" // 추가된 질문
+=======
+        "볶은 음식을 먹고 싶은가요?",
+        "비조리 음식을 먹고 싶은가요?"
+>>>>>>> Stashed changes
     ]
 ];
 
@@ -84,7 +93,14 @@ const SurveyScreen = ({ navigation }) => {
                 setGroupIndex(groupIndex + 1); // 다음 질문 그룹으로 이동
                 setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
             } else {
+<<<<<<< Updated upstream
                 navigation.navigate("result"); // 마지막 그룹이면 결과 화면으로 이동
+=======
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'result'}],
+                }); // 마지막 그룹이면 결과 화면으로 이동
+>>>>>>> Stashed changes
             }
         }
     };

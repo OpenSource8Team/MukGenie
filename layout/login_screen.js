@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+<<<<<<< Updated upstream
+=======
+import AsyncStorage from '@react-native-async-storage/async-storage';
+>>>>>>> Stashed changes
 
 const Stack = createStackNavigator();
 
@@ -28,18 +32,20 @@ const Button = ({ title, onPress, style }) => {
   );
 };
 
+// 링크 컴포넌트
 const Link = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <Text style={{ color: "#000000", fontSize: 16 }}>{title}</Text>
   </TouchableOpacity>
 );
 
+// 로그인 스크린 컴포넌트
 const LoginScreen = ({ navigation }) => {
-  // 아이디와 비밀번호를 저장할 상태 변수
+  // 로그인 정보 상태
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
-  // 로그인 버튼을 눌렀을 때 실행되는 함수
+  // 로그인 함수
   const handleLogin = () => {
     fetch("http://localhost:8080/users/login", {
       method: "POST",
@@ -51,6 +57,7 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       }),
     })
+<<<<<<< Updated upstream
       .then((response) => {
         if (!response.ok) {
           throw new Error("로그인 실패");
@@ -70,6 +77,49 @@ const LoginScreen = ({ navigation }) => {
       });
   };
 
+=======
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("로그인 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      AsyncStorage.setItem('userToken', data.token); // 로그인 성공 시 AsyncStorage에 토큰 저장
+      Alert.alert("로그인 성공");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'muk' }], // 메인 화면으로 이동
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
+    });
+  };
+
+  // 화면 로드 시 로그인 상태 확인
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const userToken = await AsyncStorage.getItem('userToken');
+        if (userToken !== null) { // 토큰이 있는 경우 메인 화면으로 스택 리셋
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'muk' }],
+          });
+        } else { // 토큰이 없는 경우 로그인 화면으로 유지
+          navigation.navigate('login');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+>>>>>>> Stashed changes
   return (
     <SafeAreaView
       style={{
@@ -139,7 +189,7 @@ const LoginScreen = ({ navigation }) => {
         {/* 로그인 버튼 */}
         <Button title="LOGIN" onPress={handleLogin} />
 
-        {/* 회원가입, 아이디 찾기, 비밀번호 찾기 링크 */}
+        {/* 회원가입, 아이디 찾기, 비밀번호 찾기 링크. 다만 회원가입만 구현됨 */}
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 30 }}>
           <Link title="회원가입" onPress={() => navigation.navigate("signup")} />
           <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
