@@ -36,7 +36,8 @@ const questionGroups = [
         "육류가 중심인 음식을 먹고 싶은가요?",
         "채소가 중심인 음식을 먹고 싶은가요?",
         "과일이 중심인 음식을 먹고 싶은가요?",
-        "곡류가 중심인 음식을 먹고 싶은가요?"
+        "곡류가 중심인 음식을 먹고 싶은가요?",
+        "해산물이 중심인 음식을 먹고 싶은가요?",
     ],
     [
         "해산물이 중심인 음식을 먹고 싶은가요?",
@@ -48,11 +49,9 @@ const questionGroups = [
         "기름기 있는 음식을 먹고 싶은가요?",
         "삶거나 찐 음식을 먹고 싶은가요?",
         "튀긴 음식을 먹고 싶은가요?",
-        "구운 음식을 먹고 싶은가요?"
-    ],
-    [
-        "볶은 음식을 먹고 싶은가요?", // 추가된 질문
-        "비조리 음식을 먹고 싶은가요?" // 추가된 질문
+        "구운 음식을 먹고 싶은가요?",
+        "볶은 음식을 먹고 싶은가요?",
+        "비조리 음식을 먹고 싶은가요?"
     ]
 ];
 
@@ -73,7 +72,28 @@ const SurveyScreen = ({ navigation }) => {
         }
     };
 
-    //컴포넌트 배치
+    // 답변 처리 함수
+    const handleAnswer = (isYes) => {
+        if (groupIndex === 2 || !isYes) {
+            // 3번 그룹에서는 "예"를 선택해도 다음 질문으로 이동
+            // 또는 "아니오"를 선택하면 다음 질문으로 이동
+            goToNext();
+        } else if (isYes) {
+            // 다른 그룹에서 "예"를 선택하면 다음 그룹으로 이동
+            if (groupIndex < questionGroups.length - 1) {
+                setGroupIndex(groupIndex + 1); // 다음 질문 그룹으로 이동
+                setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
+            } else {
+                navigation.navigate("result"); // 마지막 그룹이면 결과 화면으로 이동
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'result'}],
+                }); // 마지막 그룹이면 결과 화면으로 이동
+            }
+        }
+    };
+
+    // 컴포넌트 배치
     return (
         <SafeAreaView
             style={{
