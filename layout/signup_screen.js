@@ -146,7 +146,10 @@ const SignupScreen = ({ navigation }) => {
       })
       .then((data) => {
         Alert.alert("성공", "회원가입 성공", [
-          { text: "확인", onPress: () => navigation.navigate("login") },
+          { text: "확인", onPress: () => navigation.reset({
+            index: 0,
+            routes:[{name : 'login'}]
+          }) },
         ]);
       })
       .catch((error) => {
@@ -274,7 +277,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#6750A4",
+    backgroundColor: "#3ED4BE",
     borderRadius: 90,
     padding: 12,
   },
@@ -288,7 +291,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 70,
-    backgroundColor: "#6750A4",
+    backgroundColor: "#3ED4BE",
     padding: 12,
   },
   validationText: {

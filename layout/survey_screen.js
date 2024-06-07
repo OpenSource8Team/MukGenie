@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-
 const Stack = createStackNavigator();
-
 // 버튼 컴포넌트
 const Button = ({ title, onPress }) => {
     return (
@@ -13,7 +11,7 @@ const Button = ({ title, onPress }) => {
                 height: 70,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "#6750A4",
+                backgroundColor: "#3ED4BE",
                 borderRadius: 90,
                 padding: 12,
             }}
@@ -23,7 +21,6 @@ const Button = ({ title, onPress }) => {
         </TouchableOpacity>
     );
 };
-
 // 질문 그룹
 const questionGroups = [
     [
@@ -37,38 +34,42 @@ const questionGroups = [
         "채소가 중심인 음식을 먹고 싶은가요?",
         "과일이 중심인 음식을 먹고 싶은가요?",
         "곡류가 중심인 음식을 먹고 싶은가요?",
-        "해산물이 중심인 음식을 먹고 싶은가요?",
+         "해산물이 중심인 음식을 먹고 싶은가요?",
     ],
     [
         "해산물이 중심인 음식을 먹고 싶은가요?",
         "뜨거운 음식을 먹고 싶은가요?",
         "매운 음식을 먹고 싶은가요?",
-        "국물이 있는 음식을 먹고 싶은가요?"
+        "국물이 있는 음식을 먹고 싶은가요?",
+        "기름기 있는 음식을 먹고 싶은가요?",
     ],
     [
         "기름기 있는 음식을 먹고 싶은가요?",
         "삶거나 찐 음식을 먹고 싶은가요?",
         "튀긴 음식을 먹고 싶은가요?",
         "구운 음식을 먹고 싶은가요?",
-        "볶은 음식을 먹고 싶은가요?",
+        "볶은 음식을 먹고 싶은가요?", 
         "비조리 음식을 먹고 싶은가요?"
-    ]
-];
-
+    ]]
+  
 // 설문 화면 컴포넌트
 const SurveyScreen = ({ navigation }) => {
     const [groupIndex, setGroupIndex] = useState(0); // 질문 그룹 인덱스 상태
     const [questionIndex, setQuestionIndex] = useState(0); // 질문 인덱스 상태
 
     // 답변 처리 함수
-    const handleAnswer = () => {
+   // 다음 질문 혹은 그룹으로 이동하는 함수
+    const goToNext = () => {
         if (questionIndex < questionGroups[groupIndex].length - 1) {
             setQuestionIndex(questionIndex + 1); // 다음 질문으로 이동
         } else if (groupIndex < questionGroups.length - 1) {
             setGroupIndex(groupIndex + 1); // 다음 질문 그룹으로 이동
             setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
         } else {
-            navigation.navigate("result"); // Navigate to the result screen
+            navigation.reset({
+                index: 0,
+                routes:[{name : 'result'}]
+            }) // 마지막 질문이면 결과 화면으로 이동
         }
     };
 
@@ -84,15 +85,15 @@ const SurveyScreen = ({ navigation }) => {
                 setGroupIndex(groupIndex + 1); // 다음 질문 그룹으로 이동
                 setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
             } else {
-                navigation.navigate("result"); // 마지막 그룹이면 결과 화면으로 이동
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: 'result'}],
+                    routes:[{name : 'result'}]
                 }); // 마지막 그룹이면 결과 화면으로 이동
             }
         }
     };
 
+    //컴포넌트 배치
     // 컴포넌트 배치
     return (
         <SafeAreaView
@@ -161,18 +162,18 @@ const SurveyScreen = ({ navigation }) => {
                         alignItems: "center",
                     }}
                 >
-                    <Button title="예" onPress={handleAnswer} />
-                    <Button title="아니오" onPress={handleAnswer} />
+                    <Button title="예" onPress={() => handleAnswer(true)} />
+                    <Button title="아니오" onPress={() => handleAnswer(false)} />
                 </View>
             </View>
             <View
                 style={{
                     height: 40,
-                    backgroundColor: "#6750A4",
+                    backgroundColor: "#3ED4BE",
                 }}
             />
         </SafeAreaView>
-    );
+    )
 };
 
 export default SurveyScreen;

@@ -11,7 +11,7 @@ const Button = ({ title, onPress, backgroundColor }) => (
 			margin: 5,
 			padding: 10,
 			borderRadius: 5,
-			backgroundColor: backgroundColor || "#6750A4",
+			backgroundColor: backgroundColor || "#3ED4BE",
 		}}
 		onPress={onPress}
 	>
@@ -70,7 +70,10 @@ const SurveySetting = ({ navigation }) => {
 
 	const handleSubmit = async () => {
         if (selectedItems.length === 0) {
-            navigation.navigate('survey'); // Navigate to the next screen directly if no items are selected
+            navigation.navigation.reset({
+				index: 0,
+				routes:[{name : 'survey'}]
+			});
             return;
         }
 
@@ -79,8 +82,10 @@ const SurveySetting = ({ navigation }) => {
             const response = await fetch(`http://localhost:8080/hate/allergy?${queryParams}`);
 
             if (response.ok) {
-                // Assuming you navigate to a screen named 'survey'
-                navigation.navigate('survey');
+                navigation.reset({
+					index: 0,
+					routes:[{name : 'survey'}]
+				})
             } else {
                 console.error('Failed to fetch data from server');
             }
@@ -105,7 +110,7 @@ const SurveySetting = ({ navigation }) => {
 			<View style={{ height: 70, justifyContent: "center", alignItems: "center" }}>
 				<Button title="먹지니 시작하기!" onPress={handleSubmit} />
 			</View>
-			<View style={{ height: 40, backgroundColor: "#6750A4", padding: 12 }} />
+			<View style={{ height: 40, backgroundColor: "#3ED4BE", padding: 12 }} />
 		</SafeAreaView>
 	);
 };

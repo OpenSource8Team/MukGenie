@@ -20,7 +20,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
         height: 40,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#6750A4",
+        backgroundColor: "#3ED4BE",
         borderRadius: 90,
         padding: 5,
       }}
@@ -84,7 +84,7 @@ const MainScreen = ({ navigation }) => {
   };
 
   const botbar = () => {// 바텀바, 큰 특징 없음, 디자인용.
-    return <View style={{ height: 40, backgroundColor: "#6750A4", padding: 12 }} />;
+    return <View style={{ height: 40, backgroundColor: "#3ED4BE", padding: 12 }} />;
   };
 
   return (

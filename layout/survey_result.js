@@ -25,7 +25,7 @@ const MemoizedText = React.memo(({ text, fontSize }) => (
     <Text style={{ color: "#303233", fontSize }}>{text}</Text>
 ));
 
-const foodName = () => <MemoizedText text="음식 이름" fontSize={20} />;
+const foodName = () => <MemoizedText text="짜장면" fontSize={20} />;//테스트 위해 짜장면으로 하드코딩함, 이후 설문 알고리즘 완성되면 바꿀것.
 const foodDesc = () => <MemoizedText text="음식 설명" fontSize={14} />;
 
 const ResultScreen = ({navigation}) => {
@@ -51,8 +51,8 @@ const ResultScreen = ({navigation}) => {
 
     const ytbutton = () => (
         <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#CD201F", borderRadius: 90, padding: 10 }}>
-            <Button title="유튜브로 검색하기!" onPress={() => Linking.openURL(`https://www.youtube.com/results?search_query=.`+ foodName.MemoizedText)} />
-        </View>
+            <Button title="유튜브로 검색하기!" onPress={() => Linking.openURL(`https://www.youtube.com/results?search_query=${foodName().props.text}`)} />
+        </View>//foodname값을 서치 쿼리에 집어넣어 검색한 화면으로 이동
     );
 
     const nmbutton = () => (
@@ -62,13 +62,16 @@ const ResultScreen = ({navigation}) => {
     );
 
     const bmbutton = () => (
-        <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#6750A4", borderRadius: 90, padding: 10 }}>
-            <Button title="메인으로 돌아가기!" onPress={() => navigation.navigate("muk")} />
+        <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#3ED4BE", borderRadius: 90, padding: 10 }}>
+            <Button title="메인으로 돌아가기!" onPress={() => navigation.reset({
+			index: 0,
+			routes:[{name : 'muk'}]
+		})} />
         </View>
     );
 
     const botbar = () => (
-        <View style={{ height: 40, alignItems: "stretch", backgroundColor: "#6750A4", padding: 12 }} />
+        <View style={{ height: 40, alignItems: "stretch", backgroundColor: "#3ED4BE", padding: 12 }} />
     );
 
     return (
