@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -35,11 +36,13 @@ const Link = ({ title, onPress }) => (
 );
 
 const LoginScreen = ({ navigation }) => {
-  // 아이디와 비밀번호를 저장할 상태 변수
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
-  // 로그인 버튼을 눌렀을 때 실행되는 함수
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
   const handleLogin = () => {
     fetch("http://localhost:8080/users/login", {
       method: "POST",
@@ -51,23 +54,52 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("로그인 실패");
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("로그인 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      try {
+        if (data.token) {
+          AsyncStorage.setItem('userToken', data.token)
+            .then(() => {
+              Alert.alert("로그인 성공");
+              navigation.navigate("muk");
+            })
+            .catch((error) => {
+              console.error('AsyncStorage 에러:', error);
+              Alert.alert("토큰 저장 실패", error.message);
+            });
+        } else {
+          throw new Error("토큰이 존재하지 않습니다");
         }
-        return response.json();
-      })
-      .then((data) => {
-        // 서버에서 반환된 데이터에 따라 처리
-        console.log(data);
-        Alert.alert("로그인 성공");
-        // 예를 들어, 로그인 성공 시 네비게이션 이동 등을 수행할 수 있습니다.
-        navigation.navigate("muk");
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
-      });
+      } catch (error) {
+        console.error('AsyncStorage 에러:', error);
+        Alert.alert("토큰 저장 실패", error.message);
+      }
+    })
+    .catch((error) => {
+      console.error('로그인 에러:', error);
+      Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
+    });
+  };
+
+  const checkLoginStatus = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      if (userToken !== null) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'muk'}]}),
+      } else {
+        navigation.navigate('');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -79,10 +111,8 @@ const LoginScreen = ({ navigation }) => {
         padding: 20,
       }}
     >
-      {/* 상단 여백 */}
       <View style={{ height: 60 }} />
 
-      {/* 로그인 패널 */}
       <View
         style={{
           flex: 1,
@@ -92,14 +122,12 @@ const LoginScreen = ({ navigation }) => {
           padding: 20,
         }}
       >
-        {/* LOGIN 텍스트 */}
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontSize: 36, fontWeight: "bold", marginBottom: 20, color: "black" }}>
             LOGIN
           </Text>
         </View>
 
-        {/* 아이디 입력란 */}
         <TextInput
           placeholder="ID"
           value={userId}
@@ -117,7 +145,6 @@ const LoginScreen = ({ navigation }) => {
           }}
         />
 
-        {/* 비밀번호 입력란 */}
         <TextInput
           placeholder="Password"
           value={password}
@@ -136,10 +163,8 @@ const LoginScreen = ({ navigation }) => {
           }}
         />
 
-        {/* 로그인 버튼 */}
         <Button title="LOGIN" onPress={handleLogin} />
 
-        {/* 회원가입, 아이디 찾기, 비밀번호 찾기 링크 */}
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 30 }}>
           <Link title="회원가입" onPress={() => navigation.navigate("signup")} />
           <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
@@ -149,7 +174,6 @@ const LoginScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* 하단 바 */}
       <View
         style={{
           width: "100%",
