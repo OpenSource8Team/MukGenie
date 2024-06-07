@@ -46,7 +46,7 @@ const LogsScreen = () => {
             <View
 				style = {{
 					height: 40,
-					backgroundColor: "#6750A4",
+					backgroundColor: "#3ED4BE",
 					padding: 12,
 				}}>
 			</View>

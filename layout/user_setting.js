@@ -16,7 +16,7 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
 			height: 50,
 			justifyContent: "center",
 			alignItems: "center",
-			backgroundColor: "#6750A4",
+			backgroundColor: "#3ED4BE",
 			borderRadius: 90,
 			padding: 12,
 		}}
@@ -391,7 +391,7 @@ const UserSetting = ({navigation}) => {
 					height: 50,
 					justifyContent: "center",
 					alignItems: "center",
-					backgroundColor: "#6750A4",
+					backgroundColor: "#3ED4BE",
 					borderRadius: 90,
 					padding: 12,
 				}}>
@@ -411,7 +411,7 @@ const UserSetting = ({navigation}) => {
             <View
 				style = {{
 					height: 40,
-					backgroundColor: "#6750A4",
+					backgroundColor: "#3ED4BE",
 					padding: 12,
 				}}>
 			</View>

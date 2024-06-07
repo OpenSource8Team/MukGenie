@@ -1,32 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const Stack = createStackNavigator();
 
 // 버튼 컴포넌트
-const Button = ({ title, onPress, style }) => {
-  return (
-    <TouchableOpacity
-      style={[
-        {
-          width: 250,
-          height: 60,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#000000",
-          fontWeight: "bold",
-          borderRadius: 10,
-          padding: 15,
-        },
-        style,
-      ]}
-      onPress={onPress}
-    >
-      <Text style={{ color: "#FFFFFF", fontSize: 18 }}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
+const Button = ({ title, onPress, style }) => (
+  <TouchableOpacity
+    style={[
+      {
+        width: 250,
+        height: 60,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#000000",
+        fontWeight: "bold",
+        borderRadius: 10,
+        padding: 15,
+      },
+      style,
+    ]}
+    onPress={onPress}
+  >
+    <Text style={{ color: "#FFFFFF", fontSize: 18 }}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const Link = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
@@ -35,11 +31,13 @@ const Link = ({ title, onPress }) => (
 );
 
 const LoginScreen = ({ navigation }) => {
-  // 아이디와 비밀번호를 저장할 상태 변수
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
-  // 로그인 버튼을 눌렀을 때 실행되는 함수
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
   const handleLogin = () => {
     fetch("http://localhost:8080/users/login", {
       method: "POST",
@@ -51,43 +49,55 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       }),
     })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("로그인 실패");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // 서버에서 반환된 데이터에 따라 처리
-      console.log(data);
-      // 토큰을 AsyncStorage에 저장
-      AsyncStorage.setItem('userToken', data.token);
-      Alert.alert("로그인 성공");
-      // 예를 들어, 로그인 성공 시 네비게이션 이동 등을 수행할 수 있습니다.
-      navigation.navigate("muk");
-    })
-    .catch((error) => {
-      console.error(error);
-      Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("로그인 실패");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        // 토큰 생성 및 저장
+        const token = data.token || "generatedTokenExample12345"; // 서버가 토큰을 반환하지 않으면 임의의 토큰 생성
+        try {
+          if (token) {
+            AsyncStorage.setItem('userToken', token)
+              .then(() => {
+                Alert.alert("로그인 성공", `현재 저장된 토큰: ${token}`);//디버그용 기능, 반환된 토큰 
+                navigation.navigate("muk");
+              })
+              .catch((error) => {
+                console.error('AsyncStorage 에러:', error);
+                Alert.alert("토큰 저장 실패", error.message);
+              });
+          } else {
+            throw new Error("토큰이 존재하지 않습니다");
+          }
+        } catch (error) {
+          console.error('AsyncStorage 에러:', error);
+          Alert.alert("토큰 저장 실패", error.message);
+        }
+      })
+      .catch((error) => {
+        console.error('로그인 에러:', error);
+        Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
+      });
   };
-  
   // 어플리케이션 시작 시에 로그인 여부를 확인하여 네비게이션 결정
+
   const checkLoginStatus = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
         // 토큰이 존재하면 로그인 상태로 간주하여 홈으로 이동
         navigation.navigate('muk');
-      } else {
-        // 토큰이 없으면 로그인 화면으로 이동
-        navigation.navigate('LoginScreen');
       }
     } catch (error) {
       console.error(error);
       // 에러 처리
     }
   };
+
   return (
     <SafeAreaView
       style={{
