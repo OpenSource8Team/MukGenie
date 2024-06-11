@@ -70,11 +70,8 @@ const SurveySetting = ({ navigation }) => {
 
 	const handleSubmit = async () => {
         if (selectedItems.length === 0) {
-            navigation.navigation.reset({
-				index: 0,
-				routes:[{name : 'survey'}]
-			});
-            return;
+            navigation.reset({ index: 0, routes: [{ name: 'survey' }] });
+            return; // 선택된 항목이 없으면 다음 화면으로 바로 이동
         }
 
         try {
@@ -82,10 +79,7 @@ const SurveySetting = ({ navigation }) => {
             const response = await fetch(`http://localhost:8080/hate/allergy?${queryParams}`);
 
             if (response.ok) {
-                navigation.reset({
-					index: 0,
-					routes:[{name : 'survey'}]
-				})
+                navigation.reset({ index: 0, routes: [{ name: 'survey' }] });
             } else {
                 console.error('Failed to fetch data from server');
             }
