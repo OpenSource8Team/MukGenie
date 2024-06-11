@@ -64,7 +64,8 @@ const LoginScreen = ({ navigation }) => {
             AsyncStorage.setItem('userToken', token)
               .then(() => {
                 Alert.alert("로그인 성공", `현재 저장된 토큰: ${token}`);//디버그용 기능, 반환된 토큰 
-                navigation.navigate("muk");
+                navigation.reset({index: 0,
+                  routes:[{name : 'muk'}]});
               })
               .catch((error) => {
                 console.error('AsyncStorage 에러:', error);
@@ -90,7 +91,8 @@ const LoginScreen = ({ navigation }) => {
       const userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
         // 토큰이 존재하면 로그인 상태로 간주하여 홈으로 이동
-        navigation.navigate('muk');
+        navigation.reset({index: 0,
+          routes:[{name : 'muk'}]});
       }
     } catch (error) {
       console.error(error);
