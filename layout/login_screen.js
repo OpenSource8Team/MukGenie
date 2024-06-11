@@ -58,14 +58,16 @@ const LoginScreen = ({ navigation }) => {
       .then((data) => {
         console.log(data);
         // 토큰 생성 및 저장
-        const token = data.token || "generatedTokenExample12345"; // 서버가 토큰을 반환하지 않으면 임의의 토큰 생성
+        const token = userId; // 토큰을 사용자 아이디로 저장
         try {
           if (token) {
             AsyncStorage.setItem('userToken', token)
               .then(() => {
-                Alert.alert("로그인 성공", `현재 저장된 토큰: ${token}`);//디버그용 기능, 반환된 토큰 
-                navigation.reset({index: 0,
-                  routes:[{name : 'muk'}]});
+                Alert.alert("로그인 성공", `현재 저장된 토큰: ${token}`); // 디버그용 기능, 반환된 토큰
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'muk' }],
+                });
               })
               .catch((error) => {
                 console.error('AsyncStorage 에러:', error);
@@ -84,15 +86,17 @@ const LoginScreen = ({ navigation }) => {
         Alert.alert("로그인 실패", "아이디 또는 비밀번호가 올바르지 않습니다.");
       });
   };
-  // 어플리케이션 시작 시에 로그인 여부를 확인하여 네비게이션 결정
 
+  // 어플리케이션 시작 시에 로그인 여부를 확인하여 네비게이션 결정
   const checkLoginStatus = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
         // 토큰이 존재하면 로그인 상태로 간주하여 홈으로 이동
-        navigation.reset({index: 0,
-          routes:[{name : 'muk'}]});
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'muk' }],
+        });
       }
     } catch (error) {
       console.error(error);

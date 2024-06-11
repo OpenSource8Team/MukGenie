@@ -14,7 +14,7 @@ import SurveyResult from "./layout/survey_result";
 import SurveyScreen from "./layout/survey_screen";
 import UserSetting from "./layout/user_setting";
 import SignTestScreen from "./layout/signtest_screen";
-
+import LogScreen from "./layout/survey_logs";
 enableScreens();
 const Stack = createStackNavigator();
 
@@ -67,6 +67,7 @@ const App = () => {
         <Stack.Screen name="user" component={UserScreen} />
         <Stack.Screen name="usersetting" component={UserSetting} />
         <Stack.Screen name="signtest" component={SignTestScreen} />
+        <Stack.Screen name="log" component={LogScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

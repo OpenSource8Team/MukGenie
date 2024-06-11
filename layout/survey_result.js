@@ -28,10 +28,9 @@ const MemoizedText = React.memo(({ text, fontSize }) => (
 ));
 
 // 음식 정보 컴포넌트
-const fn = () =>{ text = "짜장면"}
 const foodName = () => <MemoizedText text="짜장면" fontSize={20} />;
 const foodDesc = () => <MemoizedText text="음식 설명" fontSize={14} />;
-const fod = "짜장면"
+
 // 결과 화면 컴포넌트
 const ResultScreen = ({ navigation }) => {
     // 음식 정보 및 이미지 표시
@@ -47,7 +46,7 @@ const ResultScreen = ({ navigation }) => {
             }}>
             {foodName()}
             <Image
-                source={require(`./resultimages/${fod}.jpg`)}
+                source={require(`./resultimages/짜장면.jpg`)}
                 resizeMode="stretch"
                 style={{ width: 300, height: 300 }}
             />
