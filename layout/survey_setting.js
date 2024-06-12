@@ -69,25 +69,27 @@ const SurveySetting = ({ navigation }) => {
 	const ingredientsGroup3 = ["민트", "계란", "오이", "가지", "브로콜리"];
 
 	const handleSubmit = async () => {
-        if (selectedItems.length === 0) {
-            navigation.navigate('survey'); // Navigate to the next screen directly if no items are selected
-            return;
-        }
+		let queryParams = '';
 
-        try {
-            const queryParams = selectedItems.map(item => `allergies=${encodeURIComponent(item)}`).join('&');
-            const response = await fetch(`http://localhost:8080/hate/allergy?${queryParams}`);
+		if (selectedItems.length === 0) {
+			queryParams = 'allergies=none';
+		} else {
+			queryParams = selectedItems.map(item => `allergies=${encodeURIComponent(item)}`).join('&');
+		}
 
-            if (response.ok) {
-                // Assuming you navigate to a screen named 'survey'
-                navigation.navigate('survey');
-            } else {
-                console.error('Failed to fetch data from server');
-            }
-        } catch (error) {
-            console.error('Error occurred while fetching data:', error);
-        }
-    };
+		try {
+			const response = await fetch(`http://localhost:8080/hate/allergy?${queryParams}`);
+
+			if (response.ok) {
+				// Assuming you navigate to a screen named 'survey'
+				navigation.navigate('survey');
+			} else {
+				console.error('Failed to fetch data from server');
+			}
+		} catch (error) {
+			console.error('Error occurred while fetching data:', error);
+		}
+	};
 
 	return (
 		<SafeAreaView style={{ flex: 1, justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
