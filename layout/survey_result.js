@@ -1,85 +1,108 @@
-import React from "react";
-import { SafeAreaView, View, Text, Image, TouchableOpacity, Linking} from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, View, Text, TouchableOpacity, Linking } from "react-native";
+import FastImage from "react-native-fast-image";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-const Button = ({ title, onPress }) => (
-    <TouchableOpacity
-        style={{
-            width: 300,
-            height: 40,
-            justifyContent: "center",
-            alignSelf: "center",
-            alignItems: "center",
-            borderRadius: 90,
-            padding: 10,
-        }}
-        onPress={onPress}
-    >
-        <Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
-    </TouchableOpacity>
+const Button = ({ title, onPress, backgroundColor }) => (
+  <TouchableOpacity
+    style={{
+      width: 300,
+      height: 40,
+      justifyContent: "center",
+      alignSelf: "center",
+      alignItems: "center",
+      borderRadius: 90,
+      padding: 10,
+      backgroundColor: backgroundColor,
+    }}
+    onPress={onPress}
+  >
+    <Text style={{ color: "#FFFFFF", fontSize: 14 }}>{title}</Text>
+  </TouchableOpacity>
 );
 
-const MemoizedText = React.memo(({ text, fontSize }) => (
-    <Text style={{ color: "#303233", fontSize }}>{text}</Text>
-));
+const ResultScreen = ({ route, navigation }) => {
+  const { result } = route.params;
+  const [photoUrl, setPhotoUrl] = useState(null);
 
-const foodName = () => <MemoizedText text="음식 이름" fontSize={20} />;
-const foodDesc = () => <MemoizedText text="음식 설명" fontSize={14} />;
+useEffect(() => {
+  const fetchPhoto = async () => {
+    try {
+      // Unsplash로부터 이미지 URL 직접 가져오기
+      const photoUrl = `https://source.unsplash.com/400x300/?${result}`;
+      setPhotoUrl(photoUrl);
+    } catch (error) {
+      console.error("Error fetching photo:", error);
+    }
+  };
 
-const ResultScreen = ({navigation}) => {
-    const foodpane = () => (
-        <View
-            style={{
-                width: 390,
-                height: 400,
-                justifyContent: "space-around",
-                alignItems: "center",
-                backgroundColor: "#FFFFFF",
-                padding: 12,
-            }}>
-            {foodName()}
-            <Image
-                source={{uri:"https://i.imgur.com/1tMFzp8.png"}}
-                resizeMode="stretch"
-                style={{ width: 300, height: 300 }}
-            />
-            {foodDesc()}
-        </View>
-    );
+  fetchPhoto();
+}, [result]);
+  const foodPane = () => (
+    <View
+      style={{
+        width: 390,
+        height: 400,
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        padding: 12,
+      }}
+    >
+      <Text style={{ color: "#303233", fontSize: 20 }}>{result}</Text>
+      {photoUrl && (
+        <FastImage
+          source={{ uri: photoUrl }}
+          resizeMode={FastImage.resizeMode.contain}
+          style={{ width: 200, height: 200 }}
+        />
+      )}
+    </View>
+  );
 
-    const ytbutton = () => (
-        <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#CD201F", borderRadius: 90, padding: 10 }}>
-            <Button title="유튜브로 검색하기!" onPress={() => Linking.openURL(`https://www.youtube.com`)} />
-        </View>
-    );
+  const ytButton = () => (
+    <Button
+      title="유튜브로 레시피 검색하기!"
+      backgroundColor="#CD201F"
+      onPress={() =>
+        Linking.openURL(`https://www.youtube.com/results?search_query=${result}+레시피`)
+      }
+    />
+  );
 
-    const nmbutton = () => (
-        <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#00C300", borderRadius: 90, padding: 10 }}>
-            <Button title="네이버 맵으로 주변 음식점 검색하기!" onPress={() => Linking.openURL(`https://map.naver.com`)} />
-        </View>
-    );
+  const nmButton = () => (
+    <Button
+      title="네이버 맵으로 주변 음식점 검색하기!"
+      backgroundColor="#00C300"
+      onPress={() => Linking.openURL(`https://map.naver.com/v5/search/${result}`)}
+    />
+  );
 
-    const bmbutton = () => (
-        <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#6750A4", borderRadius: 90, padding: 10 }}>
-            <Button title="메인으로 돌아가기!" onPress={() => navigation.navigate("muk")} />
-        </View>
-    );
+  const bmButton = () => (
+    <Button
+      title="메인으로 돌아가기!"
+      backgroundColor="#6750A4"
+      onPress={() => navigation.navigate("muk")}
+    />
+  );
 
-    const botbar = () => (
-        <View style={{ height: 40, alignItems: "stretch", backgroundColor: "#6750A4", padding: 12 }} />
-    );
-
-    return (
-        <SafeAreaView style={{ flex: 1, justifyContent: "space-between", backgroundColor: "#FFFFFF" }}>
-            {foodpane()}
-            {ytbutton()}
-            {nmbutton()}
-            {bmbutton()}
-            {botbar()}
-        </SafeAreaView>
-    );
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        backgroundColor: "#FFFFFF",
+      }}
+    >
+      {foodPane()}
+      {ytButton()}
+      {nmButton()}
+      {bmButton()}
+      <View style={{ height: 40, backgroundColor: "#6750A4" }} />
+    </SafeAreaView>
+  );
 };
 
 export default ResultScreen;
