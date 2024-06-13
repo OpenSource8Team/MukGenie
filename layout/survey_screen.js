@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ const Button = ({ title, onPress }) => {
                 height: 70,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "#6750A4",
+                backgroundColor: "#3ED4BE",
                 borderRadius: 90,
                 padding: 12,
             }}
@@ -43,14 +44,14 @@ const questionGroups = [
         "차가운 음식을 먹고 싶은가요?",
     ],
     [
-           "매운 음식을 먹고 싶은가요?",
-       ],
-       [
-           "국물이 있는 음식을 먹고 싶은가요?",
-       ],
-       [
-           "기름기 있는 음식을 먹고 싶은가요?",
-       ],
+        "매운 음식을 먹고 싶은가요?",
+    ],
+    [
+        "국물이 있는 음식을 먹고 싶은가요?",
+    ],
+    [
+        "기름기 있는 음식을 먹고 싶은가요?",
+    ],
     [
         "삶은 음식을 먹고 싶은가요?",
         "끓인 음식을 먹고 싶은가요?",
@@ -62,7 +63,7 @@ const questionGroups = [
 ];
 
 // 선택한 답변을 임시로 저장할 배열
-const temporaryAnswers = [];
+let temporaryAnswers = [];
 
 // 각 질문 그룹에 대한 답변의 매핑 배열
 const answerMappings = [
@@ -89,7 +90,6 @@ const SurveyScreen = ({ navigation }) => {
             setQuestionIndex(0); // 다음 질문 그룹의 첫 번째 질문으로 초기화
         } else {
             sendSurveyResult(); // 마지막 질문이면 결과 전송
-            navigation.navigate("result"); // 결과 화면으로 이동
         }
     };
 
@@ -115,7 +115,6 @@ const SurveyScreen = ({ navigation }) => {
                 setQuestionIndex(0);
             } else {
                 sendSurveyResult(); // 결과 전송
-                navigation.navigate("result"); // 결과 화면으로 이동
             }
         } else {
             // 답변이 "아니오"이지만 마지막 질문이 아닌 경우에는 그냥 다음으로 이동
@@ -124,40 +123,42 @@ const SurveyScreen = ({ navigation }) => {
     };
 
     // 설문 결과를 서버에 전송하는 함수
- const sendSurveyResult = () => {
-         const params = new URLSearchParams();
-         params.append('category', temporaryAnswers[0]);
-         params.append('ingredient', temporaryAnswers[1]);
-         params.append('temperature', temporaryAnswers[2]);
-         params.append('spiciness', temporaryAnswers[3]);
-         params.append('broth', temporaryAnswers[4]);
-         params.append('oiliness', temporaryAnswers[5]);
-         params.append('cookingType', temporaryAnswers[6]);
+    const sendSurveyResult = () => {
+        const params = new URLSearchParams();
+        params.append('category', temporaryAnswers[0]);
+        params.append('ingredient', temporaryAnswers[1]);
+        params.append('temperature', temporaryAnswers[2]);
+        params.append('spiciness', temporaryAnswers[3]);
+        params.append('broth', temporaryAnswers[4]);
+        params.append('oiliness', temporaryAnswers[5]);
+        params.append('cookingType', temporaryAnswers[6]);
 
-         fetch(`http://localhost:8080/foods/result?${params.toString()}`, {
-             method: 'GET',
-             headers: {
-                 'Content-Type': 'application/json'
-             }
-         })
-         .then(response => {
-             if (!response.ok) {
-                 throw new Error('Network response was not ok');
-             }
-             return response.text(); // 서버 응답을 텍스트로 가져옴
-         })
-         .then(data => {
-             console.log('Success:', data);
-             // 여기서 data는 문자열로 된 서버 응답입니다. 이를 원하는 형식으로 처리합니다.
-             // 예를 들어, 데이터가 "비빔밥"이라는 문자열인 경우:
-             // const result = data; // 또는 원하는 형식으로 데이터를 가공합니다.
-             // 결과를 적절히 화면에 표시하도록 처리합니다.
-         })
-         .catch(error => {
-             console.error('Error:', error);
-             // 오류 처리
-         });
-     };
+        fetch(`http://localhost:8080/foods/result?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // 서버 응답을 텍스트로 가져옴
+        })
+        .then(data => {
+            console.log('Success:', data);
+            // 데이터를 결과 화면으로 전달
+            navigation.reset({ index: 0, routes: [{ name: 'result', params: { foodName: data } }] });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // 오류 처리
+        })
+        .finally(() => {
+            // 설문이 완료되면 temporaryAnswers 배열 초기화
+            temporaryAnswers = [];
+        });
+    };
 
     // 컴포넌트 배치
     return (
@@ -174,7 +175,7 @@ const SurveyScreen = ({ navigation }) => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     backgroundColor: "#FFFFFF",
-                    padding:50,
+                    padding: 50,
                 }}
             >
                 <Text
@@ -234,7 +235,7 @@ const SurveyScreen = ({ navigation }) => {
             <View
                 style={{
                     height: 40,
-                    backgroundColor: "#6750A4",
+                    backgroundColor: "#3ED4BE",
                 }}
             />
         </SafeAreaView>
