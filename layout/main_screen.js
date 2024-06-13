@@ -55,9 +55,9 @@ const MainScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("surveysetting")}
         />
         <Button
-                  title="테스트"
-                  onPress={() => navigation.navigate("log")}
-                />
+          title="로그"
+          onPress={() => navigation.navigate("log")}
+        />
       </View>
     );
   };
