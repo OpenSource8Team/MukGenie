@@ -100,8 +100,30 @@ const ResultScreen = ({ route, navigation }) => {
         try {
             await AsyncStorage.setItem('foodToken', foodName);
             console.log('음식 토큰이 AsyncStorage에 저장되었습니다.');
+            logFoodNameToServer(foodName);
         } catch (error) {
             console.error('음식 토큰 저장 실패:', error);
+        }
+    };
+
+    // 서버에 푸드네임과 유저아이디를 저장하는 함수
+    const logFoodNameToServer = async (foodName) => {
+        try {
+            const userToken = await AsyncStorage.getItem('userToken');
+            if (userToken) {
+                const response = await fetch(`http://localhost:8080/log/add/${userToken}/${foodName}`, {
+                    method: 'POST',
+                });
+                if (response.ok) {
+                    console.log('서버에 음식 토큰이 저장되었습니다.');
+                } else {
+                    console.error('서버에 음식 토큰 저장 실패:', response.statusText);
+                }
+            } else {
+                console.error('유저 토큰을 찾을 수 없습니다.');
+            }
+        } catch (error) {
+            console.error('서버 요청 실패:', error);
         }
     };
 
