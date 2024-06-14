@@ -176,10 +176,6 @@ const LoginScreen = ({ navigation }) => {
         {/* 회원가입, 아이디 찾기, 비밀번호 찾기 링크 */}
         <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 30 }}>
           <Link title="회원가입" onPress={() => navigation.navigate("signup")} />
-          <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
-          <Link title="아이디 찾기" onPress={() => Alert.alert("아이디 찾기")} />
-          <Text style={{ color: "#000000", fontSize: 16, marginHorizontal: 15 }}>|</Text>
-          <Link title="비밀번호 찾기" onPress={() => Alert.alert("비밀번호 찾기")} />
         </View>
       </View>
 

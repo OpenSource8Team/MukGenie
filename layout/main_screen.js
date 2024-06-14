@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -31,8 +32,22 @@ const Button = ({ title, onPress }) => {// 버튼을 누르면 확인이 가능�
   );
 };
 
+
+
 const MainScreen = ({ navigation }) => { 
-  
+  const logout = async () => {
+    try {
+        await AsyncStorage.removeItem('userToken');
+      navigation.reset({
+      index: 0,
+      routes:[{name : 'login'}]
+    })
+    } catch (error) {
+      console.error('로그아웃 에러:', error);
+    }
+  };
+
+
   const buttonpane = () => {//버튼 정렬하는 판
     return (
       <View 
@@ -46,9 +61,8 @@ const MainScreen = ({ navigation }) => {
         }}
       >
         <Button 
-          title="유저"
-          onPress={() => navigation.navigate("user")
-        }
+          title="로그아웃"
+          onPress={logout}
         />
         <Button
           title="시작"

@@ -146,7 +146,7 @@ const ResultScreen = ({ route, navigation }) => {
     // 네이버 맵 검색 버튼
     const nmButton = () => (
         <View style={{ width: 300, height: 40, justifyContent: "center", alignSelf: "center", backgroundColor: "#00C300", borderRadius: 90, padding: 10 }}>
-            <Button title="네이버 맵으로 주변 음식점 검색하기!" onPress={() => Linking.openURL(`https://map.naver.com`)} />
+            <Button title="네이버 맵으로 주변 음식점 검색하기!" onPress={() => Linking.openURL(`https://map.naver.com/p/search/${foodName}`)} />
         </View>
     );
 
